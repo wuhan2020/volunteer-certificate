@@ -19,7 +19,7 @@ def send_email(email):  # 将result.png 发送到指定的 邮件
 
 
 def write_to_pic(name):    # 执行完这个方法后生成一个 result.png 图片 可加入email参数
-  name=get_number() # 获取编号
+  n=get_number() # 获取编号
   im= Image.open("pic.jpg")
   draw = ImageDraw.Draw(im)
   font_name = ImageFont.truetype('font/1.ttf', 55) # 名字的字体和字号
