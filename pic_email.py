@@ -3,6 +3,10 @@ from PIL import Image, ImageDraw, ImageFont
 import random
 import string
 
+def get_number():
+  return "wuhan202000001" #返回编号的方法
+
+
 def send_email(email):  # 将result.png 发送到指定的 邮件
   import yagmail
   # 链接邮箱服务器
@@ -14,7 +18,8 @@ def send_email(email):  # 将result.png 发送到指定的 邮件
   yag.send(email , '志愿者证书', contents, ["result.png"])
 
 
-def write_to_pic(name,number):    # 执行完这个方法后生成一个 result.png 图片 可加入email参数
+def write_to_pic(name):    # 执行完这个方法后生成一个 result.png 图片 可加入email参数
+  name=get_number() # 获取编号
   im= Image.open("pic.jpg")
   draw = ImageDraw.Draw(im)
   font_name = ImageFont.truetype('font/1.ttf', 55) # 名字的字体和字号
@@ -26,6 +31,6 @@ def write_to_pic(name,number):    # 执行完这个方法后生成一个 result.
   im.save("result.png")
   #send_email( email )  #可直接发送到邮箱
 
-write_to_pic("Muxxs","wuhan20200001")
+write_to_pic("Muxxs")
 
 
