@@ -47,8 +47,8 @@ def send_email():
     name = message['name']
     key = message['key']
     if not confirm_key(key):  # 没有每个人唯一的Key
-        return "0"  # 404就完事了
-    if confirm_key(key):  # 先确定下是不是志愿者列表中的key 并且是否注册过 没问题的话开始做图片
+        return "0"  
+    if confirm_use(key):  # 先确定下是不是志愿者列表中的key 并且是否注册过 没问题的话开始做图片
         try:
             wc.write_to_pic(name,email)
             return return_msg("2")
