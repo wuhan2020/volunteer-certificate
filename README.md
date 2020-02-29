@@ -7,28 +7,28 @@
 ### 成功：
 ```json
 {
-	"code": 0,
-	"data": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiVXNlciIsInVzZXJfaWQiOiI1ZTVhNzY2YTJiZWIxYjkyNzhkMWMzMGMiLCJleHAiOjE1ODI5ODg3NjB9.AkAWKkca3BqIFHNiqM8Cw9C1fX-ujyfZNS83T4tIu5U",
-	"message": "sucess"
+    "code": 0,
+    "data": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiVXNlciIsInVzZXJfaWQiOiI1ZTVhNzY2YTJiZWIxYjkyNzhkMWMzMGMiLCJleHAiOjE1ODI5ODg3NjB9.AkAWKkca3BqIFHNiqM8Cw9C1fX-ujyfZNS83T4tIu5U",
+    "message": "sucess"
 }
 ```
 ### 错误
 ```json
 {
-	"code": 1,
-	"data": "",
-	"message": "user not in server"
+    "code": 1,
+    "data": "",
+    "message": "user not in server"
 }
 ```
 ### 生成idcard接口：
 
 `http://localhost:5000/api/createIdCard`
 
-```
+```json
 {
-    “Token”:”eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiVXNlciIsInVzZXJfaWQiOiI1ZTVhMDhmMmVkMmZhNzBhMTJiNTIyZmYiLCJleHAiOjE1ODI5NjA2Mzl9.1-YngMcYcfF7NvL4PQpzNOua_p_V4VcQq6cup5LYigw”,
-    “Email”:”nwljy111@yeah.net”,
-    “Name”:”nwljy”
+    “Token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiVXNlciIsInVzZXJfaWQiOiI1ZTVhMDhmMmVkMmZhNzBhMTJiNTIyZmYiLCJleHAiOjE1ODI5NjA2Mzl9.1-YngMcYcfF7NvL4PQpzNOua_p_V4VcQq6cup5LYigw",
+    "Email":"nwljy111@yeah.net",
+    "Name":"nwljy"
 }
 ```
 
