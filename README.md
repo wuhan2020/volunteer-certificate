@@ -44,6 +44,9 @@
     "ImageId":"5e5a0909ed2fa70a12b52304"
 }
 ```
+ ### 添加新用户
+ `http://127.0.0.1:5000/api/addUserData`
+ 
 
 注意：除了获取token接口外 其他接口都是post
 返回值都是：
@@ -56,3 +59,8 @@
 {"code":0,"message": "111","data":"111"} //deta 有值
 ```
  post的Content-Type一定是application/json
+ 
+ 
+
+ 
+
