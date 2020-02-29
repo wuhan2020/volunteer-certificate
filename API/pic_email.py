@@ -2,46 +2,21 @@
 from PIL import Image , ImageDraw , ImageFont
 import random
 from tinydb import TinyDB , Query
-import string
 
-
-def confirm_key (key):
-    db = TinyDB("data.json")
-    People = Query()
-    res = db.search(People.key == key)
-    if len(res) != 0:
-        return True
-    else:
-        return False
-
-
-def confirm_email (email , key):
-    db = TinyDB("data.json")
-    People = Query()
-    res = db.search((People.email == email) & (People.key == key))
-    try:
-        if not print(res[0]['use']):
-            return True
-        else:
-            return False
-    except:return False
-
-
-
-
+#finish
 def insert_db (name , email , key , number):
     db = TinyDB("data.json")
     People = Query()
     db.insert({"name": name , "email": email , "key": key , "number": number,"use":"0"})
 
-
+#finish
 def get_number (email):
     db = TinyDB("data.json")
     People = Query()
     res = db.search(People.email == email)
     return res[0]["number"]
 
-
+#finish
 def send_email (email):  # 将result.png 发送到指定的 邮件
     import yagmail
     # 链接邮箱服务器
@@ -52,9 +27,9 @@ def send_email (email):  # 将result.png 发送到指定的 邮件
     # 发送邮件
     yag.send(email , '志愿者证书' , contents , ["result.png"])
 
-
+#finish
 def write_to_pic (name , email):  # 执行完这个方法后生成一个 result.png 图片 可加入email参数
-    number = get_number()
+    number = get_number(email)
     im = Image.open("pic.jpg")
     draw = ImageDraw.Draw(im)
     font_name = ImageFont.truetype('font/1.ttf' , 55)  # 名字的字体和字号
