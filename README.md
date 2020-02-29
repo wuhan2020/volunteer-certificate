@@ -2,7 +2,7 @@
 志愿者证书
 
 
-### 获取token 接口：
+### 获取token 接口：（应该是在后端统一脚本发邮件，这个接口不需要暴露给前端）
 `http://127.0.0.1:5000/api/getUserToken/nwljy/nwljy111@yeah.net`
 ### 成功：
 ```json
