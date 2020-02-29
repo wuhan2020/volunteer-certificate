@@ -2,7 +2,7 @@
 志愿者证书
 
 
-### 获取token 接口：（应该是在后端统一脚本发邮件，这个接口不需要暴露给前端）
+### 1.获取token 接口：（应该是在后端统一脚本发邮件，这个接口不需要暴露给前端）
 `http://127.0.0.1:5000/api/getUserToken/nwljy/nwljy111@yeah.net`
 ### 成功：
 ```json
@@ -20,7 +20,7 @@
     "message": "user not in server"
 }
 ```
-### 生成idcard接口：
+### 2.生成idcard接口：
 
 `http://localhost:5000/api/createIdCard`
 
@@ -32,7 +32,7 @@
 }
 ```
 
-### 获取已经生成图片接口
+### 3.获取已经生成图片接口
 
 `http://127.0.0.1:5000/api/getImage`
 
@@ -44,7 +44,7 @@
     "ImageId":"5e5a0909ed2fa70a12b52304"
 }
 ```
- ### 添加新用户
+ ### 4.添加新用户
  `http://127.0.0.1:5000/api/addUserData`
  
 
