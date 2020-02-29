@@ -46,15 +46,13 @@ executor = ThreadPoolExecutor(max_workers=2)
 db=None
 if confMap!=None and len(confMap)!=0:
     ServerConfigMap=confMap.get('ServerConfig',None)
+    print(ServerConfigMap)
     if ServerConfigMap!=None and len(ServerConfigMap)!=0:
         MongoClientIp=ServerConfigMap.get('MongoClientIp','127.0.0.1')
         MongoClientPort=int(ServerConfigMap.get('MongoClientPort',27017))
         print(MongoClientIp,MongoClientPort)
         PyMongoClinetUtil_=PyMongoClinetUtil(MongoClientIp,MongoClientPort)
-        client = PyMongoClinetUtil_.getClient()
-        MONGODB_DB=ServerConfigMap.get('MONGODB_DB','test')
-        MONGODB_HOST=MongoClientIp
-        MONGODB_PORT=MongoClientPort
+        
         
 #Config_=Config()
 
@@ -295,9 +293,11 @@ if __name__ == '__main__':
             PyMongoClinetUtil_.deleteAllData(userDocName)
             PyMongoClinetUtil_.deleteAllData(roleDocName)
             PyMongoClinetUtil_.deleteAllData(userImageDocName)
-            PyMongoClinetUtil_.insertToDb([{"email":"nwljy111@yeah.net","name":"nwljy","Role":"Admin"}],roleDocName)
+            print(PyMongoClinetUtil_.insertToDb([{"email":"nwljy111@yeah.net","name":"nwljy","Role":"Admin"}],roleDocName))
+            print(PyMongoClinetUtil_.insertToDb([{"email":"nwljy111@yeah.net","name":"nwljy","Role":"Admin"}],roleDocName))
 
-            PyMongoClinetUtil_.insertToDb([{"email":"nwljy111@yeah.net","name":"nwljy","Password":"8888"}],userDocName)
+            print(PyMongoClinetUtil_.insertToDb([{"email":"pengcc981@gmail.com","name":"pengcc981","Password":"8888"}],userDocName))
+            print(PyMongoClinetUtil_.insertToDb([{"email":"muxxs@foxmail.com","name":"muxxs","Password":"8888"}],userDocName))
             
             startServer(host=host,port=port)
             
