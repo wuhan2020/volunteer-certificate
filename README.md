@@ -46,3 +46,4 @@
 返回值都是：
 失败：{"code":1,"message": "user not in server","data":""}//deta 没值
 成功：{"code":0,"message": "111","data":"111"} //deta 有值
+ post的Content-Type一定是application/json
