@@ -47,8 +47,19 @@
  ### 4.添加新用户
  `http://127.0.0.1:5000/api/addUserData`
  
+### 5.前端触发后端发申请邮件接口
+`http://127.0.0.1:5000/api/applyIdCard/nwljy/nwljy@live.cn`
+#成功：
+{
+	"code": 0,
+	"data": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiVXNlciIsInVzZXJfaWQiOiI1ZTVhODZlNmMyNjMyMTU4Y2M2MzNkZDEiLCJleHAiOjE1ODM0MjMwODR9.mHiHB8GCmHgf2Cu79U3rkxUdauWqsa6ZuPTp3rq57IM",
+	"message": "sucess"
+}
+#失败
+{"code":1,"message": "user not in server","data":""}
+{"code":1,"message": "error","data":""}
 
-注意：除了获取token接口外 其他接口都是post
+注意：除了获取token，applyIdCard接口外 其他接口都是post
 返回值都是：
 失败：
 ```json
@@ -60,6 +71,7 @@
 ```
  post的Content-Type一定是application/json
  
+
  
 
  
