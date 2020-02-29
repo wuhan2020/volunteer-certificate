@@ -21,7 +21,7 @@ from flask import Flask,session,request,make_response,render_template, redirect,
 from flask_cors import CORS
 from PIL import Image
 PyMongoClinetUtil_=None
-
+FrontSidePageUrl=""
 import base64
 #test flask server
 # 可以加个判断
@@ -52,7 +52,7 @@ if confMap!=None and len(confMap)!=0:
         MongoClientPort=int(ServerConfigMap.get('MongoClientPort',27017))
         print(MongoClientIp,MongoClientPort)
         PyMongoClinetUtil_=PyMongoClinetUtil(MongoClientIp,MongoClientPort)
-        
+        FrontSidePageUrl=ServerConfigMap.get('FrontSidePageUrl','127.0.0.1')
         
 #Config_=Config()
 
@@ -254,7 +254,36 @@ def getManagerToken(UserName,UserEmail,Userpass):
     else:
         return make_response(jsonify({"code":1,"message": "user not in server","data":""}) , 200)
 
+@app.route('/api/applyIdCard/<UserName>/<UserEmail>',methods=['GET'])
+def applyIdCard(UserName,UserEmail):
+    
+    payload = {  # jwt设置过期时间的本质 就是在payload中 设置exp字段, 值要求为格林尼治时间
+        "Role":"User",      
+        "user_id": 1,
+        'exp': datetime.utcnow() + timedelta(seconds=120*60*60)
+    }
 
+    
+    # 生成token
+    
+    data=PyMongoClinetUtil_.fetchData({'email':UserEmail,'name':UserName},userDocName)
+    if data and len(data)!=0:
+        print(data)
+        payload['user_id']=str(data[0]['_id'])
+        
+        token = jwt.encode(payload, key=screct_key, algorithm='HS256')
+        print(FrontSidePageUrl)
+        url=FrontSidePageUrl+"?token="+str(token)
+        MailConfig_=MailConfig()
+        MailConfig_.mail_host=ServerConfigMap.get('mail_host',None)
+        MailConfig_.mail_pass=ServerConfigMap.get('mail_pass',None)
+        MailConfig_.mail_user=ServerConfigMap.get('mail_user',None)
+        MailConfig_.mail_port=ServerConfigMap.get('mail_port',None)
+        Mail_Util_=Mail_Util(Config=MailConfig_)
+        Mail_Util_.doSendEmailJob1(UserEmail,UserName,url)
+        return make_response(jsonify({"code":0,"message": "sucess","data":token}) , 200)
+    else:
+        return make_response(jsonify({"code":1,"message": "user not in server","data":""}) , 200)
     
 @app.route('/api/getUserToken/<UserName>/<UserEmail>',methods=['GET'])
 def getUserToken(UserName,UserEmail):
@@ -294,8 +323,8 @@ if __name__ == '__main__':
             PyMongoClinetUtil_.deleteAllData(roleDocName)
             PyMongoClinetUtil_.deleteAllData(userImageDocName)
             print(PyMongoClinetUtil_.insertToDb([{"email":"nwljy111@yeah.net","name":"nwljy","Role":"Admin"}],roleDocName))
-            print(PyMongoClinetUtil_.insertToDb([{"email":"nwljy111@yeah.net","name":"nwljy","Role":"Admin"}],roleDocName))
-
+            print(PyMongoClinetUtil_.insertToDb([{"email":"nwljy@live.cn","name":"nwljy","Role":"Admin"}],roleDocName))
+            print(PyMongoClinetUtil_.insertToDb([{"email":"nwljy@live.cn","name":"nwljy","Password":"8888"}],userDocName))
             print(PyMongoClinetUtil_.insertToDb([{"email":"pengcc981@gmail.com","name":"pengcc981","Password":"8888"}],userDocName))
             print(PyMongoClinetUtil_.insertToDb([{"email":"muxxs@foxmail.com","name":"muxxs","Password":"8888"}],userDocName))
             
