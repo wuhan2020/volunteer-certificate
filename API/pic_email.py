@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import os
+import json
 from PIL import Image , ImageDraw , ImageFont
 import random
 from tinydb import TinyDB , Query
@@ -18,6 +20,12 @@ def get_number (email):
 
 #finish
 def send_email (email):  # 将result.png 发送到指定的 邮件
+    email_json_file = os.path.join(os.path.basename(__file__), 'email.json')
+    if os.exists(email_json_file):
+        email_json = json.load(open(email_json_file))
+    else:
+        email_json = {"username": "mail", "password": "pwd",
+            "server_address": "smtp.qq.com", "smtp_port" : 465}
     import yagmail
     # 链接邮箱服务器
     yag = yagmail.SMTP(user = "mail" , password = "pwd" , host = 'smtp.qq.com')
