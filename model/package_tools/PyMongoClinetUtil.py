@@ -17,12 +17,12 @@ class PyMongoClinetUtil():
         self.host=host
         self.port=port
         
-    def getClient(self,host=host,port=port):
+    def getClient(self,host,port):
         
         myclient = pymongo.MongoClient(host=host,port=port)
         return myclient
     def getMyCol(self,docName):
-        myclient = self.getClient()
+        myclient = self.getClient(self.host,self.port)
         mydb = myclient["2019-nCov"]
         
         mycol = mydb[docName]
@@ -54,31 +54,37 @@ class PyMongoClinetUtil():
         return outResultData
     def insertToDb(self,inserData,docName):
         outResultData=[]
-        mycol=self.getMyCol(docName)
-        if isinstance (inserData,list):
-            L=len(inserData)
-            if L!=0: 
-                for i1 in range(0,L):
-                    target=inserData[i1]
-                    x=mycol.find_one(target)
-                    if x :
-                        outResultData.append({'data':"","code":1,"msg":"data is insert into db"})
-                    else :
-                        x=mycol.insert_one(target)
-                        if x and x.inserted_id:
-                            outResultData.append({'data':x.inserted_id,"code":0,"msg":"data is insert into db"})
-                        
-            else:
-                outResultData.append({"result":"data is null array"})    
-        else : 
-            x=mycol.find_one(inserData)
-            if x :
-                #print(x)
-                outResultData.append({'data':"","code":1,"msg":"data is insert into db"})
-            else :
-                x=mycol.insert_one(inserData)
-                if x and x.inserted_id:
-                    outResultData.append({'data':x.inserted_id,"code":0,"msg":"data is insert into db"})
+        try:
+            print(docName)
+            mycol=self.getMyCol(docName)
+            print(mycol)
+            if isinstance (inserData,list):
+                L=len(inserData)
+                if L!=0: 
+                    for i1 in range(0,L):
+                        target=inserData[i1]
+                        x=mycol.find_one(target)
+                        if x :
+                            outResultData.append({'data':"","code":1,"msg":"data is insert into db"})
+                        else :
+                            x=mycol.insert_one(target)
+                            if x and x.inserted_id:
+                                outResultData.append({'data':x.inserted_id,"code":0,"msg":"data is insert into db"})
+                            
+                else:
+                    outResultData.append({"result":"data is null array"})    
+            else : 
+                x=mycol.find_one(inserData)
+                if x :
+                    #print(x)
+                    outResultData.append({'data':"","code":1,"msg":"data is insert into db"})
+                else :
+                    x=mycol.insert_one(inserData)
+                    if x and x.inserted_id:
+                        outResultData.append({'data':x.inserted_id,"code":0,"msg":"data is insert into db"})
+        
+        except Exception as identifier:
+            print(identifier)
         return outResultData
     def fetchData(self,whichToFetch,docName):
         outResultData=[]
