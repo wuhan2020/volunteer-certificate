@@ -38,10 +38,10 @@
 
 ```json
 {
-    “Token”:”eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiVXNlciIsInVzZXJfaWQiOiI1ZTVhMDU2OTllOGRmNWVjMDc2ZDlhZWYiLCJleHAiOjE1ODI5NTk3MzV9.kcgtrvLVb3Z8GILkPm0iDWRhSY6LSc78u6Ey61T5GmA”,
-    “Email”:”nwljy111@yeah.net”,
-    “Name”:”nwljy”,
-    “ImageId”:”5e5a0909ed2fa70a12b52304”
+    "Token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiVXNlciIsInVzZXJfaWQiOiI1ZTVhMDU2OTllOGRmNWVjMDc2ZDlhZWYiLCJleHAiOjE1ODI5NTk3MzV9.kcgtrvLVb3Z8GILkPm0iDWRhSY6LSc78u6Ey61T5GmA",
+    "Email":"nwljy111@yeah.net",
+    "Name":"nwljy",
+    "ImageId":"5e5a0909ed2fa70a12b52304"
 }
 ```
 
