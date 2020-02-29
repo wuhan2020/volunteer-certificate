@@ -28,7 +28,10 @@ def send_email (email):  # 将result.png 发送到指定的 邮件
             "server_address": "smtp.qq.com", "smtp_port" : 465}
     import yagmail
     # 链接邮箱服务器
-    yag = yagmail.SMTP(user = "mail" , password = "pwd" , host = 'smtp.qq.com')
+    yag = yagmail.SMTP(user=email_json["username"],
+                       password=email_json["password"],
+                       host=email_json["server_address"],
+                       port=email_json["smtp_port"])
     # 邮箱正文
     contents = ['您好，附件中有您的证书']
     print("send to " + email)
