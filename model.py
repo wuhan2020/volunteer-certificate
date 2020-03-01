@@ -4,7 +4,7 @@ from tinydb import TinyDB, Query, where
 # class People
 # prop name:string 姓名
 # prop email:string 邮箱地址
-# prop key:string Token
+# prop token:string Token
 # prop number:string 手机号码
 # prop status:int 状态：
 #     0: 初始值
@@ -18,15 +18,15 @@ def gen_token(seed):
     return seed
 
 
-def insert_people(email, number, name='', key=None):
+def insert_people(email, number, name='', token=None):
     db = TinyDB("data.json")
     People = Query()
-    if key:
-        print('Warning: It is not safe to specify the key value. '
+    if token:
+        print('Warning: It is not safe to specify the token value. '
               'Just let it be None and it will be generated automatically')
     else:
-        key = gen_token(email)
-    db.insert({"name": name, "email": email, "key": key, "number": number, "status": 0})
+        token = gen_token(email)
+    db.insert({"name": name, "email": email, "token": token, "number": number, "status": 0})
     db.close()
 
 
