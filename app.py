@@ -70,7 +70,8 @@ def send_email():
         except : #发送邮件或者创建图片错误 可能是邮件有问题
             return return_msg("5")
     else:
-        return return_msg("3") # Key被用过了
+        response.data = return_msg(return_json)
+        return response  # Key被用过了
 
 
 
