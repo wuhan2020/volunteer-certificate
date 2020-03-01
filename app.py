@@ -15,29 +15,29 @@ def return_msg(message):
         message = json.encodes(message)
     return message
 
-def confirm_key (key): #finish
+def confirm_token (token): #finish
     db = TinyDB("data.json")
     People = Query()
-    res = db.search(People.key == key)
+    res = db.search(People.token == token)
     if len(res) != 0:
         return res[0]
     else:
         return False
 
 
-def confirm_use(key):#确定一下Key有没有被用过
+def confirm_use(token):#确定一下Key有没有被用过
     db = TinyDB("data.json")
     People = Query()
-    res = db.search(People.key == key)
+    res = db.search(People.token == token)
     if res[0]["use"] == 0:
         return True
     else:
         return False
 
-@app.route('/key',methods = ['post'])
-def key():
+@app.route('/token',methods = ['post'])
+def token():
     message=json.loads(request.get_data(as_text=True))
-    person_info = confirm_key(message['key'])
+    person_info = confirm_token(message['token'])
     if person_info:
         return_json = {'code': 0, 'data': person_info,
                        'message': 'success'}
@@ -52,10 +52,10 @@ def send_email():
     message = json.loads(request.get_data(as_text = True))
     email = message['email']
     name = message['name']
-    key = message['key']
-    if not confirm_key(key):  # 没有每个人唯一的Key
+    token = message['token']
+    if not confirm_token(token):  # 没有每个人唯一的Key
         return "0"  
-    if confirm_use(key):  # 先确定下是不是志愿者列表中的key 并且是否注册过 没问题的话开始做图片
+    if confirm_use(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
         try:
             wc.write_to_pic(name,email)
             return return_msg("2")
