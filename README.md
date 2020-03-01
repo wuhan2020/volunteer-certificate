@@ -18,10 +18,10 @@
 {
   "code": 0,
   "data": {
-      "Email":"xxxx@yeah.net",                  //邮箱,在页面不可以编辑
-      "Name":"xxxxx",                           //称呼
+      "email":"xxxx@yeah.net",                  //邮箱,在页面不可以编辑
+      "name":"xxxxx",                           //称呼
    },
-   "message": "sucess"
+   "message": "success"
 }
 ```
 
@@ -43,8 +43,8 @@
 
 ```json
 {
-    "Token":"dsfasgdafgaggsdagdsg",  // token
-    "Name":"new namw"                //修改后的称呼
+    "token":"dsfasgdafgaggsdagdsg",  // token
+    "name":"new namw"                //修改后的称呼
 }
 ```
 
