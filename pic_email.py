@@ -3,7 +3,7 @@ import os
 import json
 from PIL import Image, ImageDraw, ImageFont
 
-from API.model import insert_people, get_number, update_status
+from model import insert_people, get_number, update_status
 
 
 # finish

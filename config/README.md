@@ -10,15 +10,15 @@ python3 -m pip install --user -r requirements.txt
 ## Extra data file
 You need to put `data.json`, `pic.jpg` in the project root directory.
 ```shell
-cp API/data.json ./
+cp config/data.json ./
 ```
-Optionally you can make a file `API/email.json` and edit the configuration.
+Optionally you can make a file `email.json` and edit the configuration.
 ```shell
-cp API/email.json.config API/email.json
+cp config/email.json.config email.json
 ```
 To start the server, run the following command in project root directory
 ```shell
-python3 API/app.py
+python3 app.py
 ```
 To test whether the server works, you can use `curl`
 ```shell

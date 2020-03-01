@@ -4,7 +4,7 @@ import time
 
 from tinydb import TinyDB, Query
 
-from API.model import update_status
+from model import update_status
 from utils import send_email
 
 
