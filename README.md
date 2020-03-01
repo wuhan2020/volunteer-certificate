@@ -43,8 +43,8 @@
 
 ```json
 {
-    "Token":"dsfasgdafgaggsdagdsg",  // token
-    "Name":"new namw"                //修改后的称呼
+    "token":"dsfasgdafgaggsdagdsg",  // token
+    "name":"new namw"                //修改后的称呼
 }
 ```
 
