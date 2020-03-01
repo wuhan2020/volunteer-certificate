@@ -24,7 +24,7 @@ def send_email (email):  # 将result.png 发送到指定的 邮件
     if os.path.exists(email_json_file):
         email_json = json.load(open(email_json_file))
     else:
-        email_json = {"username": "mail", "password": "pwd",
+        email_json = {"username": "123@qq.com", "password": "pwd",
             "server_address": "smtp.qq.com", "smtp_port" : 465}
     import yagmail
     # 链接邮箱服务器
