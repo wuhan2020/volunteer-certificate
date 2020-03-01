@@ -14,8 +14,8 @@
 {
   "code": 0,
   "data": {
-      "Email":"xxxx@yeah.net",                  //邮箱,在页面不可以编辑
-      "Name":"xxxxx",                           //称呼
+      "email":"xxxx@yeah.net",                  //邮箱,在页面不可以编辑
+      "name":"xxxxx",                           //称呼
    },
    "message": "success"
 }
