@@ -29,7 +29,7 @@ def confirm_use(key):#确定一下Key有没有被用过
     db = TinyDB("data.json")
     People = Query()
     res = db.search(People.key == key)
-    if res[0]["use"] == 0:
+    if res[0]["status"] == 0:
         return True
     else:
         return False
