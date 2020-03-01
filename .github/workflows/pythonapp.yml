@@ -22,7 +22,7 @@ jobs:
         echo "no lint"
     - name: Test
       run: |
-        cp API/data.json ./
+        cp config/data.json ./
         python app.py &
         sleep 1s
         curl -X POST -d '{"key":"key0"}' http://localhost:5000/key 
