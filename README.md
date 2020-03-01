@@ -1,5 +1,27 @@
 # volunteer-certificate
-志愿者证书
+# 安装并启动项目(How to build dev environment):
+## Dependency Installation
+```shell
+python3 -m pip install --user -r requirements.txt
+```
+## Extra data file
+You need to put `data.json`, `pic.jpg` in the project root directory.
+```shell
+cp config/data.json ./
+```
+Optionally you can make a file `email.json` and edit the configuration.
+```shell
+cp config/email.json.config email.json
+```
+To start the server, run the following command in project root directory
+```shell
+python3 app.py
+```
+To test whether the server works, you can use `curl`
+```shell
+curl -X POST -d '{"token":"token1", "email":"your_email", "name":"your_name"}' http://127.0.0.1:5000/send
+```
+# 志愿者证书
 
 ## 一、前端接口
 
@@ -39,8 +61,8 @@
 
 ```json
 {
-    "Token":"dsfasgdafgaggsdagdsg",  // token
-    "Name":"new namw"                //修改后的称呼
+    "token":"dsfasgdafgaggsdagdsg",  // token
+    "name":"new namw"                //修改后的称呼
 }
 ```
 

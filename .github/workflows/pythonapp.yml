@@ -1,0 +1,28 @@
+name: Python application
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Lint
+      run: |
+        echo "no lint"
+    - name: Test
+      run: |
+        cp config/data.json ./
+        python app.py &
+        sleep 1s
+        curl -X POST -d '{"token":"token0"}' http://localhost:5000/token

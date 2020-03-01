@@ -1,35 +1,73 @@
-from flask import Flask,request,render_template,send_file
-import io
+from flask import Flask , request , render_template , send_file
+from tinydb import Query , TinyDB
+import io,json
 import pic_email as wc
 
 app = Flask(__name__)
+# 0:KEY is not right
+# 1:KEY is right
+# 2: Make Image& Send email sucess
+# 3: Have been used
+# 4:
+# 5:Send wrong
+def return_msg(message):
+    if type(message) is dict:
+        message = json.encodes(message)
+    return message
 
-def confirm_key(key):
-    return True
+def confirm_token (token): #finish
+    db = TinyDB("data.json")
+    People = Query()
+    res = db.search(People.token == token)
+    if len(res) != 0:
+        return res[0]
+    else:
+        return False
 
-def confirm_email(email):
-    return True
 
-def get_time():
-  return True
+def confirm_use(token):#确定一下Key有没有被用过
+    db = TinyDB("data.json")
+    People = Query()
+    res = db.search(People.token == token)
+    if res[0]["status"] == 0:
+        return True
+    else:
+        return False
+
+@app.route('/token',methods = ['post'])
+def token():
+    message=json.loads(request.get_data(as_text=True))
+    person_info = confirm_token(message['token'])
+    if person_info:
+        return_json = {'code': 0, 'data': person_info,
+                       'message': 'success'}
+    else:
+        return_json = {'code': 0, 'data':'',
+                       'message': 'user not in server'}
+    return return_msg(person_info)
 
 
-@app.route('/',methods=['GET'])
-def hello_world():
-    email = request.args.get('Email')
-    name = request.args.get('name')
-    key = request.args.get('key')
-    if confirm_key(key)==False:  #没有每个人唯一的Key
-        return ""  #404就完事了
-    if email!=None and name!= None:  #是否为第一次打开页面
-        if  confirm_email(email):  #先确定下是不是志愿者列表中的Email 是的话开始做图片
-            #print(name,email)
-            wc.write_to_pic(name)  #做图片
-            wc.send_email(email) #发邮件
-            with open("result.png", 'rb') as bites:
-                return send_file(io.BytesIO(bites.read()), attachment_filename='line.png', mimetype='image/png') #把图片return回来
-    else:  #第一次打开页面
-        return render_template("index.html")
+@app.route('/send',methods = ['POST'])
+def send_email():
+    message = json.loads(request.get_data(as_text = True))
+    email = message['email']
+    name = message['name']
+    token = message['token']
+    if not confirm_token(token):  # 没有每个人唯一的Key
+        return "0"  
+    if confirm_use(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
+        try:
+            wc.write_to_pic(name,email)
+            return return_msg("2")
+        except : #发送邮件或者创建图片错误 可能是邮件有问题
+            return return_msg("5")
+    else:
+        return return_msg("3") # Key被用过了
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run()
