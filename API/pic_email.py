@@ -18,10 +18,11 @@ def get_number (email):
     db.close()
     return res[0]["number"]
 
+#finish
 def update_use(email):
     db = TinyDB("data.json")
     People = Query()
-    db.update({'use':1} , where ("email")==email )
+    db.update({'use':"1"} , where ("email")==email )
     db.close()
 
 #finish
