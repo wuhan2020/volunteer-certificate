@@ -58,7 +58,7 @@ def send_email():
     reponse.headers['Content-Type'] = 'application/json'
     return_json = {'code': 1, 'message': '网络异常', 'data': None}
     response.data = return_msg(return_json)
-    if result == False
+    if result == False:
         return response
     email = result['email']
     if confirm_use(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
