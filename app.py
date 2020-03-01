@@ -12,7 +12,7 @@ app = Flask(__name__)
 # 5:Send wrong
 def return_msg(message):
     if type(message) is dict:
-        message = json.encodes(message)
+        message = json.dumps(message)
     return message
 
 def confirm_token (token): #finish
@@ -44,7 +44,7 @@ def token():
     else:
         return_json = {'code': 0, 'data':'',
                        'message': 'user not in server'}
-    return return_msg(person_info)
+    return return_msg(return_json)
 
 
 @app.route('/send',methods = ['POST'])
