@@ -3,7 +3,7 @@ import os
 import json
 from PIL import Image, ImageDraw, ImageFont
 
-from API.model import insert_db, get_number, update_status
+from API.model import insert_people, get_number, update_status
 
 
 # finish
@@ -49,4 +49,4 @@ def write_user():
     fake = Faker()
     # print (fake.email())
     for i in range(0, 30):
-        insert_db(fake.name(), fake.email(), "key" + str(i), str(i))
+        insert_people(name=fake.name(), email=fake.email(), key="key" + str(i), str(i))

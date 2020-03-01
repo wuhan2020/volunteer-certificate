@@ -13,10 +13,19 @@ from tinydb import TinyDB, Query, where
 #     3: 已生成证书图片
 #     4: 已发送证书邮件
 
+def gen_token(seed):
+    # pass
+    return seed
 
-def insert_db(name, email, key, number):
+
+def insert_people(email, number, name='', key=None):
     db = TinyDB("data.json")
     People = Query()
+    if key:
+        print('Warning: It is not safe to specify the key value. '
+              'Just let it be None and it will be generated automatically')
+    else:
+        key = gen_token(email)
     db.insert({"name": name, "email": email, "key": key, "number": number, "status": 0})
     db.close()
 
