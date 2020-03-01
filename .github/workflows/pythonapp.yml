@@ -25,4 +25,4 @@ jobs:
         cp config/data.json ./
         python app.py &
         sleep 1s
-        curl http://localhost:5000/api/getUserInfo?token=token0
+        curl -i http://localhost:5000/api/getUserInfo?token=token0
