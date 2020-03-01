@@ -1,37 +1,34 @@
 # -*- coding: utf-8 -*-
-import os
-import json
 from PIL import Image , ImageDraw , ImageFont
 import random
-from tinydb import TinyDB , Query
+from tinydb import TinyDB , Query ,where
 
 #finish
 def insert_db (name , email , key , number):
     db = TinyDB("data.json")
     People = Query()
     db.insert({"name": name , "email": email , "key": key , "number": number,"use":"0"})
+    db.close()
 
 #finish
 def get_number (email):
     db = TinyDB("data.json")
     People = Query()
     res = db.search(People.email == email)
+    db.close()
     return res[0]["number"]
+
+def update_use(email):
+    db = TinyDB("data.json")
+    People = Query()
+    db.update({'use':1} , where ("email")==email )
+    db.close()
 
 #finish
 def send_email (email):  # 将result.png 发送到指定的 邮件
-    email_json_file = os.path.join(os.path.dirname(__file__), 'email.json')
-    if os.path.exists(email_json_file):
-        email_json = json.load(open(email_json_file))
-    else:
-        email_json = {"username": "123@qq.com", "password": "pwd",
-            "server_address": "smtp.qq.com", "smtp_port" : 465}
     import yagmail
     # 链接邮箱服务器
-    yag = yagmail.SMTP(user=email_json["username"],
-                       password=email_json["password"],
-                       host=email_json["server_address"],
-                       port=email_json["smtp_port"])
+    yag = yagmail.SMTP(user = "mail" , password = "pwd" , host = 'smtp.qq.com')
     # 邮箱正文
     contents = ['您好，附件中有您的证书']
     print("send to " + email)
@@ -40,7 +37,8 @@ def send_email (email):  # 将result.png 发送到指定的 邮件
 
 #finish
 def write_to_pic (name , email):  # 执行完这个方法后生成一个 result.png 图片 可加入email参数
-    number = get_number(email)
+    number = get_number(email) #用这个方法获取到编号
+    update_use(email) #use 参数 变为1  生成了证书
     im = Image.open("pic.jpg")
     draw = ImageDraw.Draw(im)
     font_name = ImageFont.truetype('font/1.ttf' , 55)  # 名字的字体和字号
