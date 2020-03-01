@@ -1,5 +1,9 @@
 # volunteer-certificate
-志愿者证书
+# 安装并启动项目：
+
+见：https://github.com/wuhan2020/volunteer-certificate/tree/master/API
+
+# 志愿者证书
 
 ## 一、前端接口
 
