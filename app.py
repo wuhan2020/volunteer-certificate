@@ -34,10 +34,10 @@ def confirm_use(token):#确定一下Key有没有被用过
     else:
         return False
 
-@app.route('/token',methods = ['post'])
+@app.route('/api/getUserInfo',methods = ['get'])
 def token():
-    message=json.loads(request.get_data(as_text=True))
-    person_info = confirm_token(message['token'])
+    message = request.args.get('token')
+    person_info = confirm_token(message)
     if person_info:
         return_json = {'code': 0, 'data': person_info,
                        'message': 'success'}
