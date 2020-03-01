@@ -38,8 +38,8 @@ def get_number(email):
     return res[0]["number"]
 
 
-def update_status(email):
+def update_status(email, status=1):
     db = TinyDB("data.json")
     People = Query()
-    db.update({'status': "1"}, where("email") == email)
+    db.update({'status': status}, where("email") == email)
     db.close()
