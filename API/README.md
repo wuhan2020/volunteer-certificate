@@ -48,11 +48,26 @@ key  | 用户提交url时的key
 
 #### 返回值表:
 
-返回值  | 说明
------|-----
-0  | Key验证错误
-1  | Key验证正确
+#### 成功：
+```json
+{
+  "code": 0,
+  "data": {
+      "email":"xxxx@yeah.net",                  //邮箱,在页面不可以编辑
+      "name":"xxxxx",                           //称呼
+   },
+   "message": "success"
+}
+```
 
+#### 失败
+```json
+{
+    "code": 1,
+    "data": "",
+    "message": "user not in server"
+}
+```
 
 ---
 ### **2、生成并发送证书**
