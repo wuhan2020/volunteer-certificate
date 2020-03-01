@@ -1,6 +1,6 @@
 name: Python application
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -20,6 +20,9 @@ jobs:
     - name: Lint
       run: |
         echo "no lint"
-    - name: Test with pytest
+    - name: Test
       run: |
-        echo "no test"
+        cp API/data.json ./
+        python API/app.py &
+        sleep 1s
+        curl -X POST -d '{"key":"key0"}' http://localhost:5000/key 
