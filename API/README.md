@@ -2,6 +2,11 @@
 <!--
  * @Editors: Muxxs
  -->
+# How to build test environment
+## Dependency Installation
+```shell
+python3 -m pip install --user -r requirements.txt
+```
 
 # 证书API使用文档
 
