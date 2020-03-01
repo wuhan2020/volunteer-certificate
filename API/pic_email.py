@@ -49,4 +49,4 @@ def write_user():
     fake = Faker()
     # print (fake.email())
     for i in range(0, 30):
-        insert_people(name=fake.name(), email=fake.email(), key="key" + str(i), str(i))
+        insert_people(name=fake.name(), email=fake.email(), key="key" + str(i))
