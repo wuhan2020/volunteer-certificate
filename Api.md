@@ -80,9 +80,12 @@
 
 ## 三、数据流
  ### 第1步. 后端项目批量给用户邮箱发邮件
-   将为当前邮箱生成token，并更新本行记录的token为新token，状态置为 1
+   将为当前邮箱状态为0的邮箱生成token（可以定时任务扫描），并更新本行记录的token为新token
    每个邮件的关键内容为确认称呼的ur：
 `https://community.wuhan2020.org.cn/volunteer/update-name.html?token=dsfasgdafgaggsdagdsg`
+
+邮件发送完毕后，状态置为 1
+
  ### 第2步. 用户打开网页
  调用接口**1.通过token获取用户信息**展示数据
 
@@ -95,5 +98,5 @@
   #### 调用生成图片接口，更新pic_url，更新status 为3
   #### 调用发邮件接口 更新status 为4
   
-  状态2后每一次断掉可以重试
+  状态2后每一次断掉可以重试（定时任务扫描）
   
