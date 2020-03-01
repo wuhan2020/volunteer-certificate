@@ -3,7 +3,7 @@ import os
 import json
 from PIL import Image, ImageDraw, ImageFont
 
-from API.model import insert_db, get_number, update_use
+from API.model import insert_db, get_number, update_status
 
 
 # finish
@@ -30,7 +30,7 @@ def send_email(email):  # 将result.png 发送到指定的 邮件
 # finish
 def write_to_pic(name, email):  # 执行完这个方法后生成一个 result.png 图片 可加入email参数
     number = get_number(email)  # 用这个方法获取到编号
-    update_use(email)  # use 参数 变为1  生成了证书
+    update_status(email)  # use 参数 变为1  生成了证书
     im = Image.open("pic.jpg")
     draw = ImageDraw.Draw(im)
     font_name = ImageFont.truetype('font/1.ttf', 55)  # 名字的字体和字号
