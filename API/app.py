@@ -11,6 +11,8 @@ app = Flask(__name__)
 # 4:
 # 5:Send wrong
 def return_msg(message):
+    if type(message) is dict:
+        message = json.encodes(message)
     return message
 
 def confirm_key (key): #finish
@@ -18,7 +20,7 @@ def confirm_key (key): #finish
     People = Query()
     res = db.search(People.key == key)
     if len(res) != 0:
-        return True
+        return res[0]
     else:
         return False
 
@@ -35,9 +37,14 @@ def confirm_use(key):#确定一下Key有没有被用过
 @app.route('/key',methods = ['post'])
 def key():
     message=json.loads(request.get_data(as_text=True))
-    if confirm_key(message['key']):
-        return return_msg("1")
-    return return_msg("0")
+    person_info = confirm_key(message['key'])
+    if person_info:
+        return_json = {'code': 0, 'data': person_info,
+                       'message': 'success'}
+    else:
+        return_json = {'code': 0, 'data':'',
+                       'message': 'user not in server'}
+    return return_msg(person_info)
 
 
 @app.route('/send',methods = ['POST'])
