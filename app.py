@@ -47,14 +47,15 @@ def token():
     return return_msg(person_info)
 
 
-@app.route('/send',methods = ['POST'])
+@app.route('/api/submitUserInfo',methods = ['POST'])
 def send_email():
     message = json.loads(request.get_data(as_text = True))
-    email = message['email']
     name = message['name']
     token = message['token']
-    if not confirm_token(token):  # 没有每个人唯一的Key
-        return "0"  
+    result = confirm_token(token):  # 没有每个人唯一的Key
+    if result == False
+        return "0"
+    email = result['email']
     if confirm_use(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
         try:
             wc.write_to_pic(name,email)
