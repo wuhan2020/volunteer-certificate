@@ -21,7 +21,7 @@ def get_number (email):
 #finish
 def send_email (email):  # 将result.png 发送到指定的 邮件
     email_json_file = os.path.join(os.path.basename(__file__), 'email.json')
-    if os.exists(email_json_file):
+    if os.path.exists(email_json_file):
         email_json = json.load(open(email_json_file))
     else:
         email_json = {"username": "mail", "password": "pwd",
