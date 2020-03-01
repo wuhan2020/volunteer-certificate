@@ -55,7 +55,7 @@ def send_email():
     token = message['token']
     result = confirm_token(token)  # 没有每个人唯一的Key
     response = Response()
-    reponse.headers['Content-Type'] = 'application/json'
+    response.headers['Content-Type'] = 'application/json'
     return_json = {'code': 1, 'message': '网络异常', 'data': None}
     response.data = return_msg(return_json)
     if result == False:
