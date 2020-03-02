@@ -54,14 +54,17 @@ def token():
 
 @app.route('/api/submitUserInfo',methods = ['POST', 'OPTIONS'])
 def send_email():
-    message = json.loads(request.get_data(as_text = True))
-    name = message['name']
-    token = message['token']
-    result = confirm_token(token)  # 没有每个人唯一的Key
+    if request.method == 'POST'
+        message = json.loads(request.get_data(as_text = True))
+        name = message['name']
+        token = message['token']
+        result = confirm_token(token)  # 没有每个人唯一的Key
     response = Response()
     response.headers['Content-Type'] = 'application/json'
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = '*'
+    if request.method == 'OPTIONS':
+        return response
     return_json = {'code': 1, 'message': '网络异常', 'data': None}
     response.data = return_msg(return_json)
     if result == False:
