@@ -36,7 +36,7 @@ def confirm_use(token):#确定一下Key有没有被用过
     else:
         return False
 
-@app.route('/api/getUserInfo',methods = ['get', 'options'])
+@app.route('/api/getUserInfo',methods = ['get', 'OPTIONS'])
 def token():
     message = request.args.get('token')
     person_info = confirm_token(message)
@@ -48,10 +48,11 @@ def token():
                        'message': 'user not in server'}
     response = Response()
     response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
     response.data = return_msg(return_json)
     return response
 
-@app.route('/api/submitUserInfo',methods = ['POST', 'options'])
+@app.route('/api/submitUserInfo',methods = ['POST', 'OPTIONS'])
 def send_email():
     message = json.loads(request.get_data(as_text = True))
     name = message['name']
@@ -60,6 +61,7 @@ def send_email():
     response = Response()
     response.headers['Content-Type'] = 'application/json'
     response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
     return_json = {'code': 1, 'message': '网络异常', 'data': None}
     response.data = return_msg(return_json)
     if result == False:
