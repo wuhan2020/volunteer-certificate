@@ -36,7 +36,7 @@ def confirm_use(token):#确定一下Key有没有被用过
     else:
         return False
 
-@app.route('/api/getUserInfo',methods = ['get'])
+@app.route('/api/getUserInfo',methods = ['get', 'options'])
 def token():
     message = request.args.get('token')
     person_info = confirm_token(message)
@@ -51,7 +51,7 @@ def token():
     response.data = return_msg(return_json)
     return response
 
-@app.route('/api/submitUserInfo',methods = ['POST'])
+@app.route('/api/submitUserInfo',methods = ['POST', 'options'])
 def send_email():
     message = json.loads(request.get_data(as_text = True))
     name = message['name']
