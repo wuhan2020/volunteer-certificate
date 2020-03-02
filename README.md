@@ -53,7 +53,7 @@ curl -X POST -d '{"token":"token1", "email":"your_email", "name":"your_name"}' h
 ```
 ### 2. 用户提交信息：
 
-`http://localhost:5000/api/submitUserinfo`
+`http://localhost:5000/api/submitUserInfo`
 
 类型：post请求  post的Content-Type一定是application/json
 
