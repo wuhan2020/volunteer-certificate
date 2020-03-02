@@ -54,7 +54,7 @@ def token():
 
 @app.route('/api/submitUserInfo',methods = ['POST', 'OPTIONS'])
 def send_email():
-    if request.method == 'POST'
+    if request.method == 'POST':
         message = json.loads(request.get_data(as_text = True))
         name = message['name']
         token = message['token']
