@@ -29,7 +29,7 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 ### 1.通过token获取用户信息
 类型：get请求 
 
-`http://47.75.179.6:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg`
+`http://47.75.179.6/api/getUserInfo?token=dsfasgdafgaggsdagdsg`
 
 #### 成功：
 ```json
@@ -85,7 +85,7 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 ```
 
  ### 3.添加新用户（管理员）
- `http://47.75.179.6:5000/api/addUserData`
+ `http://47.75.179.6/api/addUserData`
 
 ## 二、数据表
 
