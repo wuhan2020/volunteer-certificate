@@ -1,3 +1,4 @@
+import os
 from flask import Flask , request , render_template , send_file
 from flask import Response
 from tinydb import Query , TinyDB
@@ -79,4 +80,12 @@ def send_email():
 
 
 if __name__ == '__main__':
-    app.run()
+    host_name = '127.0.0.1'
+    if os.environ.get('host'):
+        host_name = os.environ['host']
+    if os.environ.get('port'):
+        port_name = int(os.environ['port'])
+    else:
+        port_name = 5000
+    app.run(host=host_name, port=port_name)
+
