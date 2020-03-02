@@ -1,27 +1,44 @@
+import logging
 from flask import Flask , request , render_template , send_file,make_response,jsonify
 from tinydb import Query , TinyDB
 import io,json,os
 import pic_email as wc
 import jobs as jobs
 import traceback
+from flask_cors import CORS
+
 app = Flask(__name__)
+
+#CORS
+CORS(app, supports_credentials=True)
+
+# 日志等级 #　filename: 指定日志文件名  # 存放路径
+logging.basicConfig(level=logging.INFO,format='levelname:%(levelname)s filename: %(filename)s '
+'outputNumber: [%(lineno)d]  thread: %(threadName)s output msg:  %(message)s'   # 日志内容
+                           ' - %(asctime)s', datefmt='[%d/%b/%Y %H:%M:%S]',  # 日志时间
+                    filename='./loggmsg.log') 
+
+#根据下面的0，1，2，3，4，5，6
 defaultResult_0="KEY is not right"
 defaultResult_1="KEY is right"
 defaultResult_2="Make Image& Send email sucess"
 defaultResult_3="Have been used"
 defaultResult_5="Send wrong"
 defaultResult_6="Sending Notice Email"
+
 # 0:KEY is not right
 # 1:KEY is right
 # 2: Make Image& Send email sucess
 # 3: Have been used
 # 4:
 # 5:Send wrong
+
 def errorHanddler(e=Exception,isOut=True):
     print(str(e))
     print(repr(e))
     print(traceback.print_exc())
     print(traceback.format_exc())
+    logging.error(e)
     if isOut and isOut==True:
         return make_response(jsonify({'status':1,'message': '发生异常',"data":str(e)}) , 403)
 
