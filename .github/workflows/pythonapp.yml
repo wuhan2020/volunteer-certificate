@@ -25,5 +25,4 @@ jobs:
         cp config/data.json ./
         python app.py &
         sleep 1s
-        curl -X POST -d '{"token":"token0"}' http://localhost:5000/token
-        python3 test.py
+        curl -i http://localhost:5000/api/getUserInfo?token=token0
