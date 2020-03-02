@@ -80,7 +80,7 @@ def send_email():
 
 
 if __name__ == '__main__':
-    host_name = '127.0.0.1'
+    host_name = '0.0.0.0'
     if os.environ.get('host'):
         host_name = os.environ['host']
     if os.environ.get('port'):
