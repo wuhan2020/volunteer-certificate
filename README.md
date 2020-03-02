@@ -19,7 +19,7 @@ python3 app.py
 ```
 To test whether the server works, you can use `curl`
 ```shell
-curl -X POST -d '{"token":"token1", "email":"your_email", "name":"your_name"}' http://127.0.0.1:5000/send
+curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 ```
 # 志愿者证书
 
