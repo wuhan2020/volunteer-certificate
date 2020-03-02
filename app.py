@@ -38,7 +38,7 @@ def errorHanddler(e=Exception,isOut=True):
     print(repr(e))
     print(traceback.print_exc())
     print(traceback.format_exc())
-    logging.error(e)
+    logging.error(str(e))
     if isOut and isOut==True:
         return make_response(jsonify({'status':1,'message': '发生异常',"data":str(e)}) , 403)
 
