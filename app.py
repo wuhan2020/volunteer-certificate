@@ -46,8 +46,10 @@ def token():
     else:
         return_json = {'code': 0, 'data':'',
                        'message': 'user not in server'}
-    return return_msg(return_json)
-
+    response = Response()
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.data = return_msg(return_json)
+    return response
 
 @app.route('/api/submitUserInfo',methods = ['POST'])
 def send_email():
@@ -57,6 +59,7 @@ def send_email():
     result = confirm_token(token)  # 没有每个人唯一的Key
     response = Response()
     response.headers['Content-Type'] = 'application/json'
+    response.headers['Access-Control-Allow-Origin'] = '*'
     return_json = {'code': 1, 'message': '网络异常', 'data': None}
     response.data = return_msg(return_json)
     if result == False:
