@@ -1,6 +1,6 @@
 from tinydb import TinyDB, Query, where
 
-
+import uuid
 # class People
 # prop name:string 姓名
 # prop email:string 邮箱地址
@@ -13,9 +13,11 @@ from tinydb import TinyDB, Query, where
 #     3: 已生成证书图片
 #     4: 已发送证书邮件
 
-def gen_token(seed):
+def gen_token():
     # pass
-    return seed
+    uid = str(uuid.uuid4())
+    suid = ''.join(uid.split('-'))
+    return uid
 
 
 def insert_people(email, number, name='', token=None):
@@ -25,7 +27,7 @@ def insert_people(email, number, name='', token=None):
         print('Warning: It is not safe to specify the token value. '
               'Just let it be None and it will be generated automatically')
     else:
-        token = gen_token(email)
+        token = gen_token()
     db.insert({"name": name, "email": email, "token": token, "number": number, "status": 0})
     db.close()
 

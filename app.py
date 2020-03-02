@@ -1,21 +1,32 @@
-import os
-from flask import Flask , request , render_template , send_file
-from flask import Response
+from flask import Flask , request , render_template , send_file,make_response,jsonify
 from tinydb import Query , TinyDB
-import io,json
+import io,json,os
 import pic_email as wc
-
+import jobs as jobs
+import traceback
 app = Flask(__name__)
+defaultResult_0="KEY is not right"
+defaultResult_1="KEY is right"
+defaultResult_2="Make Image& Send email sucess"
+defaultResult_3="Have been used"
+defaultResult_5="Send wrong"
+defaultResult_6="Sending Notice Email"
 # 0:KEY is not right
 # 1:KEY is right
 # 2: Make Image& Send email sucess
 # 3: Have been used
 # 4:
 # 5:Send wrong
-def return_msg(message):
-    if type(message) is dict:
-        message = json.dumps(message)
-    return message
+def errorHanddler(e=Exception,isOut=True):
+    print(str(e))
+    print(repr(e))
+    print(traceback.print_exc())
+    print(traceback.format_exc())
+    if isOut and isOut==True:
+        return make_response(jsonify({'status':1,'message': '发生异常',"data":str(e)}) , 403)
+
+def return_msg(status,message,data):
+    return make_response(jsonify({"status":status,"message":message,"data":data}),200)
 
 def confirm_token (token): #finish
     db = TinyDB("data.json")
@@ -38,53 +49,52 @@ def confirm_use(token):#确定一下Key有没有被用过
 
 @app.route('/api/getUserInfo',methods = ['get', 'OPTIONS'])
 def token():
-    message = request.args.get('token')
-    person_info = confirm_token(message)
-    if person_info:
-        return_json = {'code': 0, 'data': person_info,
-                       'message': 'success'}
-    else:
-        return_json = {'code': 0, 'data':'',
-                       'message': 'user not in server'}
-    response = Response()
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = '*'
-    response.data = return_msg(return_json)
-    return response
-
-@app.route('/api/submitUserInfo',methods = ['POST', 'OPTIONS'])
-def send_email():
     if request.method == 'POST':
-        message = json.loads(request.get_data(as_text = True))
-        name = message['name']
-        token = message['token']
-        result = confirm_token(token)  # 没有每个人唯一的Key
-    response = Response()
-    response.headers['Content-Type'] = 'application/json'
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = '*'
-    if request.method == 'OPTIONS':
-        return response
-    return_json = {'code': 1, 'message': '网络异常', 'data': None}
-    response.data = return_msg(return_json)
-    if result == False:
-        return response
-    email = result['email']
-    if confirm_use(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
+        message = request.args.get('token')
         try:
-            wc.write_to_pic(name,email)
-            return_json = {'code': 0, 'message': '', 'data': None}
-            response.data = return_msg(return_json)
-            return response
-        except : #发送邮件或者创建图片错误 可能是邮件有问题
-            return return_msg("5")
-    else:
-        response.data = return_msg(return_json)
-        return response  # Key被用过了
+
+            if message:
+                    
+                person_info = confirm_token(message)
+                if person_info:
+                    return return_msg(0,"获取成功",person_info)
+                else:
+                    return return_msg(1,"获取失败","user is not in server")
+            else :
+                return return_msg(1,"获取失败","data is null")
+        except Exception as identifier:
+                errorHanddler(identifier)
+
+    @app.route('/api/submitUserInfo',methods = ['POST', 'OPTIONS'])
+    def send_email():
+        content=request.get_data(as_text = True)
+        if content:
+            message = json.loads(content)
+            email = message['email']
+            name = message['name']
+            token = message['token']
+            if not confirm_token(token):  # 没有每个人唯一的Key
+                return return_msg(0,defaultResult_0,"")  
+            if confirm_use(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
+                try:
+                    wc.write_to_pic(name,email)
+                    return return_msg(0,defaultResult_2,"")
+                except : #发送邮件或者创建图片错误 可能是邮件有问题
+                    return return_msg(1,defaultResult_5,"")
+            else:
+                return return_msg(0,defaultResult_3,"")
+        else:
+            return return_msg(1,"data is null","")
 
 
-
-
+@app.route('/sendNoticeEmail',methods = ['GET'])
+def sendNoticeEmail():
+    try:
+        jobs.send_notice_email()
+        return return_msg(1,defaultResult_6,"")
+    except Exception as identifier:
+        errorHanddler(identifier)
+    
 
 
 if __name__ == '__main__':
