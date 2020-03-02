@@ -5,12 +5,12 @@ import io,json,os
 import pic_email as wc
 import jobs as jobs
 import traceback
-from flask_cors import CORS
+#from flask_cors import CORS
 
 app = Flask(__name__)
 
 #CORS
-CORS(app, supports_credentials=True)
+#CORS(app, supports_credentials=True)
 
 # 日志等级 #　filename: 指定日志文件名  # 存放路径
 logging.basicConfig(level=logging.INFO,format='levelname:%(levelname)s filename: %(filename)s '
