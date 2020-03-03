@@ -31,7 +31,7 @@ def is_token_unused(token):#确定一下Key有没有被用过
     db = TinyDB("data.json")
     People = Query()
     res = db.search(People.token == token)
-    if res[0]["status"] == 1:
+    if res and res[0]["status"] == 1:
         return True
     else:
         return False
