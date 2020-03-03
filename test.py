@@ -5,7 +5,9 @@ import unittest
 import yagmail
 from PIL import Image
 
+from jobs import send_notice_email
 from pic_email import write_to_pic
+
 
 class SubmitUserInfoTests(unittest.TestCase):
     def test_generate_image_and_send_email(self):
@@ -14,3 +16,4 @@ class SubmitUserInfoTests(unittest.TestCase):
             img.save('pic.jpg')
         with patch("yagmail.SMTP") as mock_smtp:
             write_to_pic('test name', 'muxxs@foxmail.com')
+            send_notice_email()
