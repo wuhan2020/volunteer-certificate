@@ -14,7 +14,7 @@ def send_email(email):  # 将result.png 发送到指定的 邮件
     else:
         email_json = {"username": "123@localhost", "password": "",
                       "server_address": "localhost", "smtp_port": 25,
-                      "smtp_ssl": False, "smtp_skip_login": True}
+                      "smtp_ssl": False, "smtp_auth": True}
     import yagmail
     # 链接邮箱服务器
     yag = yagmail.SMTP(user=email_json["username"],
