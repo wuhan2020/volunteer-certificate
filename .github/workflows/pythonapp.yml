@@ -23,6 +23,7 @@ jobs:
     - name: Test
       run: |
         cp config/data.json ./
+        cp config/email.json.config ./email.json
         python app.py &
         sleep 1s
         curl -i http://localhost:5000/api/getUserInfo?token=token0
