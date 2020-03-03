@@ -29,7 +29,7 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 ### 1.通过token获取用户信息
 类型：get请求 
 
-`http://47.75.179.6:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg`
+`https://api.wuhan2020.org.cn/api/getUserInfo?token=dsfasgdafgaggsdagdsg`
 
 #### 成功：
 ```json
@@ -53,7 +53,7 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 ```
 ### 2. 用户提交信息：
 
-`http://47.75.179.6:5000/api/submitUserInfo`
+`https://api.wuhan2020.org.cn/api/submitUserInfo`
 
 类型：post请求  post的Content-Type一定是application/json
 
