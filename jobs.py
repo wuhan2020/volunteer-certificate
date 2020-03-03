@@ -26,3 +26,6 @@ def send_notice_email():
         update_status(email=user['email'], status=1)
         time.sleep(30 + random.random() * 120)
     db.close()
+
+if __name__ == '__main__':
+    send_notice_email()
