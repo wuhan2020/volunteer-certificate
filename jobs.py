@@ -24,3 +24,4 @@ def send_notice_email():
         )
         update_status(email=user['email'], status=1)
         time.sleep(random.random() * 10)
+    db.close()

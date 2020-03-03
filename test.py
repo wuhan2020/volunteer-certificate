@@ -16,4 +16,7 @@ class SubmitUserInfoTests(unittest.TestCase):
             img.save('pic.jpg')
         with patch("yagmail.SMTP") as mock_smtp:
             write_to_pic('test name', 'muxxs@foxmail.com')
+
+    def test_notice_email(self):
+        with patch("yagmail.SMTP"):
             send_notice_email()
