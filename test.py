@@ -7,6 +7,7 @@ from PIL import Image
 
 from pic_email import write_to_pic
 
+
 class SubmitUserInfoTests(unittest.TestCase):
     def test_generate_image_and_send_email(self):
         if not os.path.exists('pic.jpg'):
@@ -14,3 +15,7 @@ class SubmitUserInfoTests(unittest.TestCase):
             img.save('pic.jpg')
         with patch("yagmail.SMTP") as mock_smtp:
             write_to_pic('test name', 'muxxs@foxmail.com')
+
+
+if __name__ == '__main__':
+    unittest.main()
