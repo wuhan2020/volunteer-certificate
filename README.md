@@ -97,8 +97,8 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 | token | 字符型 | 验证码 | 因为没有用户权限系统，所以用token作为本次活动权限标识，用uuid算法生成唯一串 |
 | name       | 字符型    | 称呼 |    |
 | email            | 字符型         | 邮箱 |     |
+| number        | 字符型     | 证书编号 |  在数据源导入时候已经生成   |
 | pic_url        | 字符型     | 生成证书图片名称 |     |
-| certificate_no        | 字符型     | 证书编号 |  在数据源导入时候已经生成   |
 | status           | 整型        | 状态   | 0：初始化 1 已经发送提醒邮件 2：用户已提交 3：图片已经生成 4：证书邮件已发出 |
 
 ## 三、数据流
