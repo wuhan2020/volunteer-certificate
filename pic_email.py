@@ -12,14 +12,18 @@ def send_email(email):  # 将result.png 发送到指定的 邮件
     if os.path.exists(email_json_file):
         email_json = json.load(open(email_json_file))
     else:
-        email_json = {"username": "123@qq.com", "password": "pwd",
-                      "server_address": "smtp.qq.com", "smtp_port": 465}
+        email_json = {"username": "123@localhost", "password": "",
+                      "server_address": "localhost", "smtp_port": 25,
+                      "smtp_ssl": False, "smtp_skip_login": True}
     import yagmail
     # 链接邮箱服务器
     yag = yagmail.SMTP(user=email_json["username"],
                        password=email_json["password"],
                        host=email_json["server_address"],
-                       port=email_json["smtp_port"])
+                       port=email_json["smtp_port"],
+                       smtp_ssl=email_json["smtp_ssl"],
+                       smtp_starttls=email_json["smtp_ssl"],
+                       smtp_skip_login=email_json["skip_auth"])
     # 邮箱正文
     contents = ['您好，附件中有您的证书']
     print("send to " + email)
