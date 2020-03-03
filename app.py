@@ -27,11 +27,11 @@ def confirm_token (token): #finish
         return False
 
 
-def confirm_use(token):#确定一下Key有没有被用过
+def is_token_unused(token):#确定一下Key有没有被用过
     db = TinyDB("data.json")
     People = Query()
     res = db.search(People.token == token)
-    if res[0]["status"] == 0:
+    if res[0]["status"] == 1:
         return True
     else:
         return False
@@ -40,12 +40,12 @@ def confirm_use(token):#确定一下Key有没有被用过
 def token():
     message = request.args.get('token')
     person_info = confirm_token(message)
-    if person_info:
-        return_json = {'code': 0, 'data': person_info,
-                       'message': 'success'}
+    if person_info and person_info['status'] == 1:
+        return_json = {'code': 0, 'data': person_info,'message': 'success'}
+    elif person_info and person_info['status'] > 1:
+        return_json = {'code': 1, 'data':'','message': 'you have submitted your information, please check your email'}
     else:
-        return_json = {'code': 0, 'data':'',
-                       'message': 'user not in server'}
+        return_json = {'code': 1, 'data':'','message': 'user not exist'}
     response = Response()
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = '*'
@@ -70,7 +70,7 @@ def send_email():
     if result == False:
         return response
     email = result['email']
-    if confirm_use(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
+    if is_token_unused(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
         try:
             wc.write_to_pic(name,email)
             return_json = {'code': 0, 'message': '', 'data': None}
