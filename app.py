@@ -21,21 +21,21 @@ def confirm_token (token): #finish
     db = TinyDB("data.json")
     People = Query()
     res = db.search(People.token == token)
+    db.close()
     if len(res) != 0:
         return res[0]
     else:
         return False
-    db.close()
 
 def is_token_unused(token):#确定一下Key有没有被用过
     db = TinyDB("data.json")
     People = Query()
     res = db.search(People.token == token)
+    db.close()
     if res and res[0]["status"] == 1:
         return True
     else:
         return False
-    db.close()
 
 @app.route('/api/getUserInfo',methods = ['get', 'OPTIONS'])
 def token():
