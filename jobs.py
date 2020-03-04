@@ -1,6 +1,7 @@
 # crontab files
 import random
 import time
+import uuid
 
 from tinydb import TinyDB, Query
 
@@ -24,7 +25,8 @@ def send_notice_email():
                     + user['token'] + '">https://community.wuhan2020.org.cn/zh-cn/certification/index.html?token='
                     + user['token'] + '</a>领取您的《志愿者证书》\nwuhan2020 开源社区\n社区网址：<a href="https://community.wuhan2020.org.cn/">https://community.wuhan2020.org.cn/</a>',
         )
-        update_status(email=user['email'], status=1)
+
+        update_status_and_token(email=user['email'], status=1,token = uuid.uuid1())
         time.sleep(30 + random.random() * 120)
     db.close()
 
