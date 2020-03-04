@@ -22,7 +22,7 @@ def write_to_pic(name, email):  # 执行完这个方法后生成一个 result.pn
     update_status(email, 3)
     send_email(to_email=email,
                subject='请领取您的志愿者证书',
-               content='您好，附件中有您的证书',
+               content='您好，附件中有您的证书\n\n\nwuhan2020 开源社区\n\n\n社区网址：<a href="https://community.wuhan2020.org.cn/">https://community.wuhan2020.org.cn/</a>',
                attachment=[image_file]
                )
     update_status(email, 4)
