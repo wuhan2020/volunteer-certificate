@@ -20,3 +20,6 @@ class SubmitUserInfoTests(unittest.TestCase):
     def test_notice_email(self):
         with patch("yagmail.SMTP"):
             send_notice_email()
+
+if __name__ == '__main__':
+    unittest.main()
