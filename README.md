@@ -105,7 +105,7 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
  ### 第1步. 后端项目批量给用户邮箱发邮件
    将为当前邮箱状态为0的邮箱生成token（可以定时任务扫描），并更新本行记录的token为新token
    每个邮件的关键内容为确认称呼的ur：
-`https://community.wuhan2020.org.cn/volunteer/update-name.html?token=dsfasgdafgaggsdagdsg`
+`https://community.wuhan2020.org.cn/zh-cn/certification/index.html?token=dsfasgdafgaggsdagdsg`
 
 邮件发送完毕后，状态置为 1
 
