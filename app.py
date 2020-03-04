@@ -4,6 +4,7 @@ from flask import Response
 from tinydb import Query , TinyDB
 import io,json
 import pic_email as wc
+from model import  update_status
 
 app = Flask(__name__)
 # 0:KEY is not right
