@@ -17,9 +17,9 @@ class WebAPITests(unittest.TestCase):
 
 class SubmitUserInfoTests(unittest.TestCase):
     def test_generate_image_and_send_email(self):
-        if not os.path.exists('pic.jpg'):
+        if not os.path.exists('pic.jpeg'):
             img = Image.new('RGB', (750, 1200))
-            img.save('pic.jpg')
+            img.save('pic.jpeg')
         with patch("yagmail.SMTP") as mock_smtp:
             write_to_pic('test name', 'muxxs@foxmail.com')
 
