@@ -5,7 +5,7 @@ import uuid
 
 from tinydb import TinyDB, Query
 
-from model import update_status
+from model import update_status_and_token
 from utils import send_email
 
 
@@ -18,7 +18,7 @@ def send_notice_email():
     People = Query()
     target_users = db.search(People.status == 0)
     for user in target_users[:30]:  # 这里最多需要150 * 30s来发送完毕
-        token = uuid.uuid1()
+        token = str(uuid.uuid1())
         send_email(
             to_email=user['email'],
             subject='快来领取您的《wuhan2020开源社区志愿者证书》',
