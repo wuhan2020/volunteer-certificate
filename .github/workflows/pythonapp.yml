@@ -20,10 +20,14 @@ jobs:
     - name: Lint
       run: |
         echo "no lint"
-    - name: Test
+    - name: Generate coverage report
       run: |
         cp config/data.json ./
-        python app.py &
-        sleep 1s
-        curl -i http://localhost:5000/api/getUserInfo?token=token0
-        python test.py
+        python -m coverage test.py
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./.coverage
+        flags: unittests
+
