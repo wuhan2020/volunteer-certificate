@@ -24,10 +24,11 @@ jobs:
       run: |
         cp config/data.json ./
         python -m coverage run test.py
+        python -m coverage xml
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./.coverage
+        file: ./coverage.xml
         flags: unittests
 
