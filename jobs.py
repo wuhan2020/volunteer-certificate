@@ -19,9 +19,10 @@ def send_notice_email():
     for user in target_users[:30]:  # 这里最多需要150 * 30s来发送完毕
         send_email(
             to_email=user['email'],
-            subject='快来领取您的wuhan2020开源社区志愿者证书',
-            content='感谢您的辛苦付出，请点击链接 https://community.wuhan2020.org.cn/volunteer/update-name.html?token='
-                    + user['token'] + '领取您的《志愿者证书》(一个月内有效)\n',
+            subject='快来领取您的《wuhan2020开源社区志愿者证书》',
+            content='感谢您的辛苦付出，请点击链接 <a href="https://community.wuhan2020.org.cn/zh-cn/certification/index.html?token='
+                    + user['token'] + '">https://community.wuhan2020.org.cn/zh-cn/certification/index.html?token='
+                    + user['token'] + '</a>领取您的《志愿者证书》\nwuhan2020 开源社区\n社区网址：<a href="https://community.wuhan2020.org.cn/">https://community.wuhan2020.org.cn/</a>',
         )
         update_status(email=user['email'], status=1)
         time.sleep(30 + random.random() * 120)
