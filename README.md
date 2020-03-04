@@ -1,5 +1,5 @@
 # volunteer-certificate
-![CI](https://github.com/wuhan2020/volunteer-certificate/workflows/CI/badge.svg)
+![Python application](https://github.com/wuhan2020/volunteer-certificate/workflows/Python%20application/badge.svg)
 # 安装并启动项目(How to build dev environment):
 ## Dependency Installation
 ```shell
