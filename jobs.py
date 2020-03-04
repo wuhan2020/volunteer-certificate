@@ -22,7 +22,7 @@ def send_notice_email():
             subject='快来领取您的《wuhan2020开源社区志愿者证书》',
             content='感谢您的辛苦付出，请点击链接 <a href="https://community.wuhan2020.org.cn/zh-cn/certification/index.html?token='
                     + user['token'] + '">https://community.wuhan2020.org.cn/zh-cn/certification/index.html?token='
-                    + user['token'] + '</a>领取您的《志愿者证书》\nwuhan2020 开源社区\n社区网址：https://community.wuhan2020.org.cn/',
+                    + user['token'] + '</a>领取您的《志愿者证书》\nwuhan2020 开源社区\n社区网址：<a href="https://community.wuhan2020.org.cn/">https://community.wuhan2020.org.cn/</a>',
         )
         update_status(email=user['email'], status=1)
         time.sleep(30 + random.random() * 120)
