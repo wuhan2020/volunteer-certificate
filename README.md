@@ -5,6 +5,21 @@
 ```shell
 python3 -m pip install --user -r requirements.txt
 ```
+## Startup shell
+
+You can use shell script to start or stop the application 
+```shell script
+cd volunteer-certificate
+# start up
+./bin/start.sh
+
+# shutdown
+./bin/stop.sh
+
+# restart
+./bin/restart.sh
+```
+
 ## Extra data file
 You need to put `data.json`, `pic.jpg` in the project root directory.
 ```shell
