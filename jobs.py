@@ -27,7 +27,7 @@ def send_notice_email():
                     + token + '</a>领取您的《志愿者证书》\nwuhan2020 开源社区\n社区网址：<a href="https://community.wuhan2020.org.cn/">https://community.wuhan2020.org.cn/</a>',
         )
 
-        update_status_and_token(email=user['email'], status=1,token = token)
+        update_status_and_token(email=user['email'], status=1,token=token)
         time.sleep(30 + random.random() * 120)
     db.close()
 
