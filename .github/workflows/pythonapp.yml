@@ -23,7 +23,7 @@ jobs:
     - name: Generate coverage report
       run: |
         cp config/data.json ./
-        python -m coverage test.py
+        python -m coverage run test.py
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
