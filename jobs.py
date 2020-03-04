@@ -26,8 +26,8 @@ def send_notice_email():
                     + user['token'] + '</a>领取您的《志愿者证书》\nwuhan2020 开源社区\n社区网址：<a href="https://community.wuhan2020.org.cn/">https://community.wuhan2020.org.cn/</a>',
         )
         update_status(email=user['email'], status=1)
-        slope = email_config["max_time"] - email_config["min_time"]
-        time.sleep(email_config["min_time"] + random.random() * slope)
+        slope = email_config["max_second"] - email_config["min_second"]
+        time.sleep(email_config["min_second"] + random.random() * slope)
     db.close()
 
 if __name__ == '__main__':
