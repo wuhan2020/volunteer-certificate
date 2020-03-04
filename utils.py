@@ -22,8 +22,3 @@ def send_email(to_email, subject, content, attachment=None):
     print("send to " + to_email, 'with subject', subject)
     # 发送邮件
     yag.send(to_email, subject, content, attachment)
-
-
-if __name__ == '__main__':
-    send_email('843213558@qq.com', 'test before push', 'It will be so luck if you receive this email', ['pic.jpg'])
-
