@@ -13,7 +13,7 @@ def write_to_pic(name, email):  # 执行完这个方法后生成一个 result.pn
     draw = ImageDraw.Draw(im)
     font_name = ImageFont.truetype('font/1.ttf', size = 55)  # 名字的字体和字号
     font_number = ImageFont.truetype('font/1.ttf', size = 35)  # 编号的字体和字号
-    setFontdate = ImageFont.truetype('font/DENG.ttf' ,size = 28)  # date字体路径
+    setFontdate = ImageFont.truetype('font/DENG.TTF' ,size = 28)  # date字体路径
     imwidth, imheight = im.size
     font_width, font_height = draw.textsize(name, font_name)  # 获取名字的大小
     draw.text(((imwidth - font_width - font_name.getoffset(name)[0]) / 2, 470), text=name, font=font_name,
