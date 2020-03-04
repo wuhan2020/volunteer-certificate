@@ -6,6 +6,11 @@ from PIL import Image, ImageDraw, ImageFont
 from model import insert_people, get_number, update_status
 from utils import send_email
 
+def update_status(email):
+    db = TinyDB("data.json")
+    People = Query()
+    db.update({'status':4}, where ("email")==email )
+    db.close()
 
 def write_to_pic(name, email):  # 执行完这个方法后生成一个 result.png 图片 可加入email参数
     number = get_number(email)  # 用这个方法获取到编号
@@ -27,7 +32,7 @@ def write_to_pic(name, email):  # 执行完这个方法后生成一个 result.pn
                content='您好，附件中有您的证书',
                attachment=[image_file]
                )
-
+    update_status(email)
 
 def write_user():
     from faker import Faker
