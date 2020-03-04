@@ -71,6 +71,7 @@ def send_email():
         return response
     email = result['email']
     if is_token_unused(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
+        update_status(email, 2)
         try:
             wc.write_to_pic(name,email)
             return_json = {'code': 0, 'message': '', 'data': None}
