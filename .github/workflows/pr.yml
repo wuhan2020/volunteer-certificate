@@ -1,4 +1,4 @@
-name: Python application
+name: PR_Action
 
 on: [pull_request]
 
