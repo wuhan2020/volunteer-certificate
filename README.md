@@ -25,17 +25,15 @@ You need to put `data.json`, `pic.jpg` in the project root directory.
 ```shell
 cp config/data.json ./
 ```
-Optionally you can make a file `email.json` and edit the configuration.
-```shell
-cp config/email.json.config email.json
-```
+Optionally you can make a file `email.json` from the template `config/email.json.config` and edit the configuration; make a file `org.json` from the template `config/org.json.config` and edit the configuration.
+
 To start the server, run the following command in project root directory
 ```shell
 python3 app.py
 ```
 To test whether the server works, you can use `curl`
 ```shell
-curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
+curl http://localhost:5000/api/getUserInfo?token=token0
 ```
 # 志愿者证书
 
@@ -71,7 +69,6 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 
 `https://api.wuhan2020.org.cn/api/submitUserInfo`
 
-类型：post请求  post的Content-Type一定是application/json
 
 入参
 
@@ -99,13 +96,11 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
       "data":null    
    }
 ```
-
- ### 3.添加新用户（管理员）
- `http://47.75.179.6:5000/api/addUserData`
+ ### 3.添加新名字（管理员）
+ `/api/addUserData`
 
 ## 二、数据表
 
-按照github 拼音顺序进行排列
 
 | 字段                                                  | 类型                                                | 名称   | 描述                                      |
 | ----------------------------------------------------- | ---------- | ------------------------------------------- | ------------ |
@@ -119,8 +114,8 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 
 ## 三、数据流
  ### 第1步. 后端项目批量给用户邮箱发邮件
-   将为当前邮箱状态为0的邮箱生成token（可以定时任务扫描），并更新本行记录的token为新token
-   每个邮件的关键内容为确认称呼的ur：
+   将为当前邮箱状态为0的邮箱生成token，并更新本行记录的token为新token
+发送邮件给志愿者，每个邮件的关键内容为一个带有 token 的链接，比如：
 `https://community.wuhan2020.org.cn/zh-cn/certification/index.html?token=dsfasgdafgaggsdagdsg`
 
 邮件发送完毕后，状态置为 1
@@ -137,5 +132,5 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
   #### 调用生成图片接口，更新pic_url，更新status 为3
   #### 调用发邮件接口 更新status 为4
   
-  状态2后每一次断掉可以重试（定时任务扫描）
+  状态2后每一次断掉可以重试
   
