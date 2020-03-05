@@ -1,3 +1,7 @@
+.DS_Store
+node_modules
+bundle.js
+config-local.js
 pic.jpg
 result.png
 email.json
