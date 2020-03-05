@@ -18,7 +18,7 @@ def gen_token(seed):
     return seed
 
 
-def insert_people(email, number, name='', token=None):
+def insert_people(email, name, number='', token=None):
     db = TinyDB("data.json")
     People = Query()
     exist_list = db.search(People.email == email)

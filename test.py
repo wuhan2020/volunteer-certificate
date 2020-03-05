@@ -6,6 +6,7 @@ import yagmail
 from PIL import Image
 
 from jobs import send_notice_email
+from model import insert_people
 from pic_email import write_to_pic
 from app import app
 
@@ -32,5 +33,9 @@ class SubmitUserInfoTests(unittest.TestCase):
         with patch("yagmail.SMTP"):
             send_notice_email()
 
+class DbOperationTests(unittest.TestCase):
+    def test_insert_people(self):
+       insert_people('abc@example.org', 'fake name')
+ 
 if __name__ == '__main__':
     unittest.main()
