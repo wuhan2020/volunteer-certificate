@@ -95,7 +95,7 @@ def send_email():
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.info)
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     host_name = '0.0.0.0'
     if os.environ.get('host'):
         host_name = os.environ['host']
