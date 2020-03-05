@@ -1,8 +1,12 @@
 import os
+import io
+import json
+import logging
+
 from flask import Flask , request , render_template , send_file
 from flask import Response
 from tinydb import Query , TinyDB
-import io,json
+
 import pic_email as wc
 from model import  update_status
 
@@ -91,6 +95,7 @@ def send_email():
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.info)
     host_name = '0.0.0.0'
     if os.environ.get('host'):
         host_name = os.environ['host']

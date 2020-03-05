@@ -1,5 +1,6 @@
 import json
 import os
+import logging
 
 import yagmail
 
@@ -25,5 +26,10 @@ def send_email(to_email, subject, content, attachment=None):
     # contents = ['您好，附件中有您的证书']
     print("send to " + to_email, 'with subject', subject)
     # 发送邮件
-    yag.send(to_email, subject, content, attachment)
-
+    try:
+        yag.send(to_email, subject, content, attachment)
+    except Exception as e:
+        logging.info('send email to %s failed; Reason:' % to_email)
+        logging.info(e)
+        return False
+    return True

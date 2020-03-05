@@ -2,6 +2,7 @@
 import random
 import time
 import uuid
+import logging
 
 from tinydb import TinyDB, Query
 
@@ -20,18 +21,20 @@ def send_notice_email():
     email_config = get_email_config()
     for user in target_users[:30]:  # 这里最多需要150 * 30s来发送完毕
         token = str(uuid.uuid1())
-        send_email(
+        is_successful = send_email(
             to_email=user['email'],
             subject='快来领取您的《wuhan2020开源社区志愿者证书》',
             content='感谢您的辛苦付出，请点击链接 <a href="https://community.wuhan2020.org.cn/zh-cn/certification/index.html?token='
                     + token + '">https://community.wuhan2020.org.cn/zh-cn/certification/index.html?token='
                     + token + '</a>领取您的《志愿者证书》\nwuhan2020 开源社区\n社区网址：<a href="https://community.wuhan2020.org.cn/">https://community.wuhan2020.org.cn/</a>',
         )
-        update_status_and_token(email=user['email'], status=1, token=token)
+        if is_successful:
+            update_status_and_token(email=user['email'], status=1, token=token)
         slope = email_config["max_second"] - email_config["min_second"]
         time.sleep(email_config["min_second"] + random.random() * slope)
 
     db.close()
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     send_notice_email()
