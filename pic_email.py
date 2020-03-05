@@ -3,8 +3,9 @@ import os
 import json
 from PIL import Image, ImageDraw, ImageFont
 
-from model import insert_people, get_number, update_status
+from model import get_number, update_status
 from utils import send_email
+
 def write_to_pic(name, email):  # 执行完这个方法后生成一个 result.png 图片 可加入email参数
     number = get_number(email)  # 用这个方法获取到编号
     update_status(email)  # use 参数 变为1  生成了证书
@@ -27,9 +28,3 @@ def write_to_pic(name, email):  # 执行完这个方法后生成一个 result.pn
                )
     update_status(email, 4)
 
-def write_user():
-    from faker import Faker
-    fake = Faker()
-    # print (fake.email())
-    for i in range(0, 30):
-        insert_people(name=fake.name(), email=fake.email(), token="token" + str(i))
