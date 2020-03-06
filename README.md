@@ -98,6 +98,32 @@ curl http://localhost:5000/api/getUserInfo?token=token0
 ```
  ### 3.添加新名字（管理员）
  `/api/addUserData`
+入参
+
+```json
+{
+    "token":"abc",  // admin-token
+    "email":"foo@example.org"
+}
+```
+
+结果
+#### 成功：
+```json
+   {
+      "code":0,      // 成功
+      "message": "",
+      "data":null
+   }
+```
+#### 失败：
+```json
+   {
+      "code":1,   // 失败
+      "message": "网络异常",
+      "data":null    
+   }
+```
 
 ## 二、数据表
 

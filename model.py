@@ -23,7 +23,7 @@ def insert_people(email, name, number='', token=None):
     People = Query()
     exist_list = db.search(People.email == email)
     if len(exist_list):
-        raise FileExistsError('Duplicate entry for key email')
+        raise KeyError('Duplicate entry for key email')
     if token:
         print('Warning: It is not safe to specify the token value. '
               'Just let it be None and it will be generated automatically')
