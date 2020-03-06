@@ -23,6 +23,7 @@ class WebAPITests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
     def test_submitPictures(self):
         client = app.test_client()
+        client.options('/api/uploadImage')
         image_file  = open('config/pic.jpg', 'rb')
         response = client.post('/api/uploadImage',
             data={'template': image_file})
