@@ -2,6 +2,7 @@ import os
 import io
 import json
 import logging
+import utils
 
 from flask import Flask , request , render_template , send_file
 from flask import Response
@@ -34,7 +35,13 @@ def confirm_token(token): #finish
         return False
 
 def confirm_admin_token(token):
-    return True
+    orgconfig = utils.get_org_config()
+    admintoken = orgconfig["admin_token"]
+    if token == admintoken:
+        return True
+    else:
+        return False
+
 def is_token_unused(token):#确定一下Key有没有被用过
     db = TinyDB("data.json")
     People = Query()
