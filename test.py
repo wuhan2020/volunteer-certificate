@@ -38,7 +38,11 @@ class SubmitUserInfoTests(unittest.TestCase):
 
 class DbOperationTests(unittest.TestCase):
     def test_insert_people(self):
-       insert_people('abc@example.org', 'fake name')
+        insert_people('abc@example.org', 'fake name')
+        try:
+            insert_people('abc@example.org', 'fake name')
+        except:
+            pass
  
 if __name__ == '__main__':
     copyfile('config/data.json', 'data.json')
