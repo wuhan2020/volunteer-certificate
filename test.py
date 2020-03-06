@@ -22,8 +22,9 @@ class WebAPITests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
     def test_addUser(self):
         client = app.test_client()
+        json_data = {"token":"admin", "email":"abc@example.org"}
         response = client.post('/api/addUserData',
-            json={"token":"admin", "email":"abc@example.org"})
+            json=json_data)
         self.assertEqual(response.status_code, 200)
 
 class SubmitUserInfoTests(unittest.TestCase):
