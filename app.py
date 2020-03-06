@@ -2,6 +2,7 @@ import os
 import io
 import json
 import logging
+import utils
 
 from flask import Flask , request , render_template , send_file
 from flask import Response
@@ -34,11 +35,9 @@ def confirm_token(token): #finish
         return False
 
 def confirm_admin_token(token):
-    db = TinyDB("org.json")
-    People = Query()
-    res = db.search(People.token == token)
-    db.close()
-    if len(res) != 0:
+    orgconfig = utils.get_org_config()
+    admintoken = orgconfig["admin_token"]
+    if token == admintoken:
         return True
     else:
         return False
