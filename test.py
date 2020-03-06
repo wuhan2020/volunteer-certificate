@@ -27,9 +27,12 @@ class WebAPITests(unittest.TestCase):
         client.options('/api/uploadImage')
         image_file  = open('config/pic.jpg', 'rb')
         response = client.post('/api/uploadImage',
-            data={'template': image_file})
-        self.assertEqual(response.status_code, 200)
+            data={'template': image_file},
+            headers={'token': '1234'})
+        res_json = json.loads(response.data.decode('ascii'))
+        self.assertEqual(res_json['code'], 0)
         image_file.close()
+
     def test_addUser(self):
         client = app.test_client()
         json_data = {"token":"1234", "email":"abc@example.org"}
