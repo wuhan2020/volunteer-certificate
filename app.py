@@ -8,7 +8,8 @@ from flask import Response
 from tinydb import Query , TinyDB
 
 import pic_email as wc
-from model import  update_status
+from model import update_status
+from model import insert_people
 
 app = Flask(__name__)
 # 0:KEY is not right
@@ -22,7 +23,7 @@ def return_msg(message):
         message = json.dumps(message)
     return message
 
-def confirm_token (token): #finish
+def confirm_token(token): #finish
     db = TinyDB("data.json")
     People = Query()
     res = db.search(People.token == token)
@@ -32,6 +33,8 @@ def confirm_token (token): #finish
     else:
         return False
 
+def confirm_admin_token(token):
+    return True
 def is_token_unused(token):#确定一下Key有没有被用过
     db = TinyDB("data.json")
     People = Query()
@@ -90,9 +93,61 @@ def send_email():
         return response  # Key被用过了
 
 
+@app.route('/api/uploadImage', methods = ['POST', 'OPTIONS'])
+def save_image():
+    if request.method == 'POST':
+        # get the token from the header
+        token = request.headers.get('Token', '')
+        result = confirm_admin_token(token)  # 没有每个人唯一的Key
+    response = Response()
+    response.headers['Content-Type'] = 'application/json'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    if request.method == 'OPTIONS':
+        return response
+    return_json = {'code': 1, 'message': '网络异常', 'data': None}
+    response.data = return_msg(return_json)
+    # get the image file path
+    image_path = request.files.get('template', False)
+    # Todo: security check of image_path
+    if result == False or image_path == False:
+        return response
+    # overwrite pic.jpg
+    basedir = os.path.dirname(__file__)
+    try:
+        os.rename(image_path, os.path.join(basedir, 'pic.jpg'))
+    except Exception as e:
+        logging.info(e)
+    return_json = {'code': 0, 'message': '', 'data': None}
+    response.data = return_msg(return_json)
+    return response    
 
-
-
+@app.route('/api/addUserData',methods = ['POST', 'OPTIONS'])
+def add_data():
+    if request.method == 'POST':
+        message = json.loads(request.get_data(as_text = True))
+        email = message['email']
+        token = message['token']
+        result = confirm_admin_token(token)  # 没有每个人唯一的Key
+    response = Response()
+    response.headers['Content-Type'] = 'application/json'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    if request.method == 'OPTIONS':
+        return response
+    return_json = {'code': 1, 'message': '网络异常', 'data': None}
+    response.data = return_msg(return_json)
+    if result == False:
+        return response
+    try:
+        insert_people(email, '')
+    except KeyError:
+        pass
+    except Exception as e:
+        logging.info(e) 
+    return_json = {'code': 0, 'message': '', 'data': None}
+    response.data = return_msg(return_json)
+    return response
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
