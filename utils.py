@@ -20,6 +20,14 @@ def get_org_config():
         org_json = json.loads(f.read())
     return org_json
 
+def update_org_config(orgconfig):
+    product_file = 'org.json'
+    dev_file = 'config/org.json.config'
+    config_file = product_file if os.path.exists(product_file) else dev_file
+    with open(config_file, 'w') as f:
+        json.dump(orgconfig, f)
+
+
 def send_email(to_email, subject, content, attachment=None):
     email_json = get_email_config()
     # 链接邮箱服务器
