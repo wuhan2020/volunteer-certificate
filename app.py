@@ -104,7 +104,7 @@ def send_email():
 def save_image():
     if request.method == 'POST':
         # get the token from the header
-        token = request.headers.get('Token', '')
+        token = request.headers.get('token', '')
         result = confirm_admin_token(token)  # 没有每个人唯一的Key
     response = Response()
     response.headers['Content-Type'] = 'application/json'

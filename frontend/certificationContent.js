@@ -145,7 +145,7 @@ class CertificationContent extends React.Component {
                                 <legend>{formText.header}</legend>
                                 <div className="form-row email">
                                     <label>{formText.emailLabel}</label>
-                                    <input type="email" name="mail" value={ this.state.email} disabled />
+                                    <input type="email" name="mail" value={ this.state.email } disabled />
                                 </div>
                                 <div className="form-row name">
                                     <label>{formText.nicknameLabel}
