@@ -96,8 +96,21 @@ curl http://localhost:5000/api/getUserInfo?token=token0
       "data":null    
    }
 ```
- ### 3.添加新名字（管理员）
+### 3.添加新名字（管理员）
  `/api/addUserData`
+### 4. Upload template image
+ `/api/uploadImage`
+
+Required Header:
+```
+Token: abc
+Content-Type: multipart/form-data
+```
+
+name="template"
+data="image raw content"
+
+json response, same format as 2.
 
 ## 二、数据表
 
