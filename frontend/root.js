@@ -10,11 +10,18 @@ const App = () => (
             <UserProfile />
         </div>
     )
-if window.location.href.search('admin.html') > 0 {
+const AdminApp = () => (
+        <div>
+            <Admin />
+        </div>
+    )
+if(window.location.href.search('admin.html') > 0) {
     ReactDOM.render(
-        <App/>, document.getElementById('root')
+        <AdminApp/>, document.getElementById('root')
     )
 }
 else { //  
-
+    ReactDOM.render(
+        <App />, document.getElementById('root')
+    )
 }
