@@ -3,6 +3,7 @@ node_modules
 bundle.js
 config-local.js
 pic.jpg
+!config/pic.jpg
 result.png
 email.json
 data.json
