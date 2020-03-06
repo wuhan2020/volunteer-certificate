@@ -104,7 +104,7 @@ def send_email():
 def save_image():
     if request.method == 'POST':
         # get the token from the header
-        token = request.headers.get('Token', '')
+        token = request.headers.get('token', '')
         result = confirm_admin_token(token)  # 没有每个人唯一的Key
     response = Response()
     response.headers['Content-Type'] = 'application/json'
@@ -150,6 +150,36 @@ def add_data():
         insert_people(email, '')
     except KeyError:
         pass
+    except Exception as e:
+        logging.info(e) 
+    return_json = {'code': 0, 'message': '', 'data': None}
+    response.data = return_msg(return_json)
+    return response
+    
+@app.route('/api/updateOrgConfig',methods = ['POST', 'OPTIONS'])
+def update_config():
+    if request.method == 'POST':
+        message = json.loads(request.get_data(as_text = True))
+        token = message["token"]
+        result = confirm_admin_token(token)  # 没有每个人唯一的Key
+    response = Response()
+    response.headers['Content-Type'] = 'application/json'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    if request.method == 'OPTIONS':
+        return response
+    return_json = {'code': 1, 'message': '网络异常', 'data': None}
+    response.data = return_msg(return_json)
+    if result == False:
+        return response
+    try:
+        orgconfig=utils.get_org_config()
+        for domain in message:
+            if message=="token":
+                continue
+            if domain in orgconfig:
+                orgconfig[domain]=message[domain]  #usage: name="some org"&website="website@website.org"&token="[admin token]", update name&website    
+        utils.update_org_config(orgconfig)
     except Exception as e:
         logging.info(e) 
     return_json = {'code': 0, 'message': '', 'data': None}
