@@ -32,6 +32,9 @@ def confirm_token (token): #finish
     else:
         return False
 
+def confirm_admin_token(token):
+    return True
+
 def is_token_unused(token):#确定一下Key有没有被用过
     db = TinyDB("data.json")
     People = Query()

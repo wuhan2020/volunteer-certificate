@@ -1,6 +1,7 @@
 import os
 from unittest.mock import patch
 import unittest
+from shutil import copyfile
 
 import yagmail
 from PIL import Image
@@ -20,6 +21,13 @@ class WebAPITests(unittest.TestCase):
         response = client.post('/api/submitUserInfo', 
             json={"token":"token0", "name":"new name"})
         self.assertEqual(response.status_code, 200)
+    def test_submitPictures(self):
+        client = app.test_client()
+        image_file  = open('config/pic.jpg', 'rb')
+        response = client.post('/api/uploadImage',
+            data={'template': image_file})
+        self.assertEqual(response.status_code, 200)
+        image_file.close()
 
 class SubmitUserInfoTests(unittest.TestCase):
     def test_generate_image_and_send_email(self):
@@ -40,4 +48,5 @@ class DbOperationTests(unittest.TestCase):
        insert_people('abc@example.org', 'fake name')
  
 if __name__ == '__main__':
+    copyfile('config/data.json', 'data.json')
     unittest.main()
