@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw, ImageFont
 from model import get_number, update_status
 from utils import send_email
 
-def write_to_pic(name, email):  # 执行完这个方法后生成一个 result.png 图片 可加入email参数
+def write_to_pic(name, email, token):  # 执行完这个方法后生成一个 result.png 图片 可加入email参数
     number = get_number(email)  # 用这个方法获取到编号
     date_str = datetime.datetime.strftime(datetime.datetime.now(),'%Y年%m月%d日') #获取日期
     update_status(email)  # use 参数 变为1  生成了证书
@@ -23,7 +23,8 @@ def write_to_pic(name, email):  # 执行完这个方法后生成一个 result.pn
               fill=(0, 0, 0))  # 写上名字 x使用了居中
     draw.text(xy=(310, 285), text=number, font=font_number)  # 写上编号
     draw.text((434 , 900) , date_str , font = setFontdate , fill = (0 , 0 , 0))  # 写上日期
-    image_file = 'result.png'
+    #image_file = 'result.png'
+    image_file = "images/%s.png"%(token)
     im.save(image_file)
     update_status(email, 3)
     send_email(to_email=email,
