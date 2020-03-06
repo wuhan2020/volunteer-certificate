@@ -31,10 +31,15 @@ class WebAPITests(unittest.TestCase):
         image_file.close()
     def test_addUser(self):
         client = app.test_client()
-        json_data = {"token":"admin", "email":"abc@example.org"}
+        json_data = {"token":"1234", "email":"abc@example.org"}
         response = client.post('/api/addUserData',
             json=json_data)
         self.assertEqual(response.status_code, 200)
+    def test_addUserRejected(self):
+        client = app.test_client()
+        json_data = {"token":"5678", "email":"def@example.org"}
+        response = client.post('/api/addUserData',json=json_data)
+        self.assertEqual(0,0) #我不会写了，app.py里的返回包code怎么调啊
 
 class SubmitUserInfoTests(unittest.TestCase):
     def test_generate_image_and_send_email(self):
