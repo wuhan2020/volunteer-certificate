@@ -39,7 +39,8 @@ class WebAPITests(unittest.TestCase):
         client = app.test_client()
         json_data = {"token":"5678", "email":"def@example.org"}
         response = client.post('/api/addUserData',json=json_data)
-        self.assertEqual(0,0) #我不会写了，app.py里的返回包code怎么调啊
+        res_json = json.loads(response.data.decode('ascii'))
+        self.assertEqual(res_json['code'], 0)
 
 class SubmitUserInfoTests(unittest.TestCase):
     def test_generate_image_and_send_email(self):
