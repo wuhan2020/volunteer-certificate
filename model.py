@@ -27,6 +27,7 @@ def insert_people(email, name, number='', token=None):
     exist_list = db.search(People.email == email)
     if len(exist_list):
         print('Duplicate entry for key email')
+        db.close()
         raise EmailDuplicateException()
     if token:
         print('Warning: It is not safe to specify the token value. '

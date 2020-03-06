@@ -10,6 +10,18 @@ const App = () => (
             <UserProfile />
         </div>
     )
-ReactDOM.render(
-    <App/>, document.getElementById('root')
-)
+const AdminApp = () => (
+        <div>
+            <Admin />
+        </div>
+    )
+if(window.location.href.search('admin.html') > 0) {
+    ReactDOM.render(
+        <AdminApp/>, document.getElementById('root')
+    )
+}
+else { //  
+    ReactDOM.render(
+        <App />, document.getElementById('root')
+    )
+}
