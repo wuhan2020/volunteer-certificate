@@ -1,6 +1,7 @@
 import os
 from unittest.mock import patch
 import unittest
+from shutil import copyfile
 
 import yagmail
 from PIL import Image
@@ -40,4 +41,5 @@ class DbOperationTests(unittest.TestCase):
        insert_people('abc@example.org', 'fake name')
  
 if __name__ == '__main__':
+    copyfile('config/data.json', 'data.json')
     unittest.main()

@@ -29,7 +29,7 @@ def write_to_pic(name, email, token):  # 执行完这个方法后生成一个 re
     draw.text((org_config["date_horizontal_pos"],
                org_config["date_vertical_pos"]),
                date_str , font = setFontdate , fill = (0 , 0 , 0))  # 写上日期
-    image_file = 'images/%s.png'
+    image_file = 'images/%s.png' % token
     im.save(image_file)
     update_status(email, 3)
     content = '您好，附件中有您的证书\n\n\n'
