@@ -1,6 +1,7 @@
 import os
 from unittest.mock import patch
 import unittest
+from shutil import copyfile
 
 import yagmail
 from PIL import Image
@@ -29,11 +30,13 @@ class WebAPITests(unittest.TestCase):
 
 class SubmitUserInfoTests(unittest.TestCase):
     def test_generate_image_and_send_email(self):
+        if not os.path.isdir("images"):
+            os.mkdir("images")
         if not os.path.exists('pic.jpg'):
             img = Image.new('RGB', (750, 1200))
             img.save('pic.jpg')
         with patch("yagmail.SMTP") as mock_smtp:
-            write_to_pic('test name', 'muxxs@foxmail.com')
+            write_to_pic('test name', 'muxxs@foxmail.com', 'idle_token')
 
     def test_notice_email(self):
         with patch("yagmail.SMTP"):
@@ -41,7 +44,12 @@ class SubmitUserInfoTests(unittest.TestCase):
 
 class DbOperationTests(unittest.TestCase):
     def test_insert_people(self):
-       insert_people('abc@example.org', 'fake name')
+        insert_people('abc@example.org', 'fake name')
+        try:
+            insert_people('abc@example.org', 'fake name')
+        except:
+            pass
  
 if __name__ == '__main__':
+    copyfile('config/data.json', 'data.json')
     unittest.main()
