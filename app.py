@@ -12,8 +12,10 @@ from tinydb import Query , TinyDB
 import pic_email as wc
 from model import update_status
 from model import insert_people
+from jobs import SendEmailJob
 
 app = Flask(__name__)
+send_email_job = SendEmailJob()
 # 0:KEY is not right
 # 1:KEY is right
 # 2: Make Image& Send email sucess
@@ -194,6 +196,29 @@ def update_config():
     except Exception as e:
         logging.info(e) 
     return_json = {'code': 0, 'message': '', 'data': None}
+    response.data = return_msg(return_json)
+    return response
+
+@app.route('/api/email',methods = ['POST', 'OPTIONS'])
+def email_task():
+    if request.method == 'POST':
+        message = json.loads(request.get_data(as_text = True))
+        action = message.get('action','')
+        token = message['token']
+        result = confirm_admin_token(token)  # 没有每个人唯一的Key
+    response = Response()
+    response.headers['Content-Type'] = 'application/json'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    if request.method == 'OPTIONS':
+        return response
+    return_json = {'code': 1, 'message': '网络异常', 'data': None}
+    response.data = return_msg(return_json)
+    if result == False:
+        return response
+    if action == 'send':
+        send_email_job.start()
+        return_json = {'code': 0, 'message': 'start send email jobs successfully', 'data': None}
     response.data = return_msg(return_json)
     return response
 

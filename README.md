@@ -106,7 +106,7 @@ data="image raw content"
 
 Json response, same format as 1.
 ### 5. Update configuration
-`updateOrgConfig`
+`/api/updateOrgConfig`
 ```json
 {
     "token":"abc",  // admin-token
@@ -121,7 +121,16 @@ Json response, same format as 1.
 }
 ```
 Json response, same format as 1.
-
+### 6. Email query
+`/api/email`
+```json
+{
+   "token":"abc",
+   "action": "send", // or query
+}
+```
+Json response, same format as 1.
+```
 ## 二、数据表
 
 

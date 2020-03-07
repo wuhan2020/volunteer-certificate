@@ -73,6 +73,28 @@ export default class Admin extends React.Component {
                             alert_message: 'network problem'});
          });
   }
+  submitSendEmailRequest() {
+    const { host } = this.state;
+    let api = `${host}api/email`;
+    let data = {
+        token: this.state.token,
+        action: 'send'
+    }
+    this.postJsonData(api, data)
+        .then( res => res.json() )
+        .then( (result) => {
+            const { code, message } = result;
+               this.setState({
+                 alert_message: message,
+                 status: code == 0 ? 'success' : 'fail'
+               });
+         })
+         .catch( (error) => {
+             console.error('Error:', error);
+             this.setState({status: 'fail',
+                            alert_message: 'network problem'});
+         });    
+  }
   submitVolunteerEmails() {
     const { host } = this.state;
     let api = `${host}api/addUserData`;
@@ -108,14 +130,14 @@ export default class Admin extends React.Component {
       body: formData
     });
   }
-  postJsonData(api, data) {
+  postJsonData(api, JsonData) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     let configurations = {
         method: 'POST',
         mode: 'cors',
         headers,
-        body: JSON.stringify(data)
+        body: JSON.stringify(JsonData)
     };        
     return  fetch(api, configurations);
   }  
@@ -233,10 +255,22 @@ export default class Admin extends React.Component {
               name="textAreaContent"
               value={ this.state.textAreaContent }
               onChange={this.handleChange}></textarea>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
+
         </div>
+        <div className="form-row">    
+            <div className="form-group col-md-4">
+              <button type="submit" className="btn btn-primary">
+                Submit
+              </button>
+            </div>
+            <div className="form-group col-md-4">
+              <button className="btn btn-primary" onClick={(e) => {
+                this.submitSendEmailRequest();
+              }}>
+                Send Emails
+              </button>
+            </div>
+          </div>        
       </form>
     </div>
     )

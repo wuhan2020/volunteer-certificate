@@ -7,7 +7,7 @@ import json
 import yagmail
 from PIL import Image
 
-from jobs import send_notice_email
+from jobs import SendEmailJob
 from model import insert_people
 from pic_email import write_to_pic
 from app import app
@@ -60,6 +60,16 @@ class WebAPITests(unittest.TestCase):
         response = client.post('/api/updateOrgConfig',json=json_data)
         res_json = json.loads(response.data.decode('ascii'))
         self.assertEqual(res_json['code'], 0)
+    def test_submitSendEmailRequest(self):
+        client = app.test_client()
+        json_data = {"token": "1234", "action": "send"}
+        response = client.post('/api/email', json=json_data)
+        res_json = json.loads(response.data.decode('ascii'))
+        self.assertEqual(res_json['code'], 0)
+        json_data = {"token": "4321"}
+        response = client.post('/api/email', json=json_data)
+        res_json = json.loads(response.data.decode('ascii'))
+        self.assertEqual(res_json['code'], 1)
 
 class SubmitUserInfoTests(unittest.TestCase):
     def test_generate_image_and_send_email(self):
@@ -73,7 +83,7 @@ class SubmitUserInfoTests(unittest.TestCase):
 
     def test_notice_email(self):
         with patch("yagmail.SMTP"):
-            send_notice_email()
+            SendEmailJob().start()
 
 class DbOperationTests(unittest.TestCase):
     def test_insert_people(self):
