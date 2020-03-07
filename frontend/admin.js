@@ -52,8 +52,8 @@ export default class Admin extends React.Component {
       token: this.state.token,
       name: this.state.org_name,
       website: this.state.org_website,
-      name_horizontal_pos: this.state.name_horizontal_pos,
-      name_vertical_pos: this.state.name_vertical_pos,
+      name_horizontal_pos: parseInt(this.state.name_horizontal_pos),
+      name_vertical_pos: parseInt(this.state.name_vertical_pos),
       username: this.state.org_email_username,
       password: this.state.org_email_password
     }
@@ -229,13 +229,13 @@ export default class Admin extends React.Component {
         <div className="form-row">
           <div className="form-group col-md-6">
             <label htmlFor="nameHorizontal">Volunteer name horizontal position</label>
-            <input type="text" className="form-control" id="nameHorizontal"
+            <input type="number" className="form-control" id="nameHorizontal"
                    name="name_horizontal_pos" value={ this.state.name_horizontal_pos }
                    onChange={this.handleChange}></input>
           </div>
           <div className="form-group col-md-6">
             <label htmlFor="nameVertical">Vertical position</label>
-            <input type="text" className="form-control" id="nameVertical"
+            <input type="number" className="form-control" id="nameVertical"
                    name="name_vertical_pos" value={ this.state.name_vertical_pos }
                    onChange={this.handleChange}></input>
           </div>
