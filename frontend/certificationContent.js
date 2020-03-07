@@ -3,6 +3,8 @@ import React from 'react';
 import { API_URL } from './config-local';
 import { formText } from './data-source';
 
+import './scss-legacy/certificationContent.scss';
+
 class CertificationContent extends React.Component {
     constructor(props) {
         super(props);
@@ -22,6 +24,7 @@ class CertificationContent extends React.Component {
             message: ''
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleResizing = this.handleResizing.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
     }
     getUserInfo(token) {
@@ -145,7 +148,7 @@ class CertificationContent extends React.Component {
                                 <legend>{formText.header}</legend>
                                 <div className="form-row email">
                                     <label>{formText.emailLabel}</label>
-                                    <input type="email" name="mail" value={ this.state.email} disabled />
+                                    <input type="email" name="mail" value={ this.state.email } disabled />
                                 </div>
                                 <div className="form-row name">
                                     <label>{formText.nicknameLabel}

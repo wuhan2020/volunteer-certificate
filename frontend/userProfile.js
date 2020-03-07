@@ -1,7 +1,7 @@
 import React from 'react';
 
 import CertificationContent from './certificationContent';
-
+import './scss-legacy/userProfile.scss';
 
 class Certification extends React.Component {
     constructor(props) {

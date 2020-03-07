@@ -20,7 +20,7 @@ def write_to_pic(name, email, token):  # 执行完这个方法后生成一个 re
     setFontdate = ImageFont.truetype('font/DENG.TTF' ,size = 28)  # date字体路径
     imwidth, imheight = im.size
     font_width, font_height = draw.textsize(name, font_name)  # 获取名字的大小
-    draw.text(((imwidth - font_width - font_name.getoffset(name)[0]) / 2, org_config['name_verticial_pos']),
+    draw.text(((imwidth - font_width - font_name.getoffset(name)[0]) / 2, org_config['name_vertical_pos']),
               text=name, font=font_name,
               fill=(0, 0, 0))  # 写上名字 x使用了居中
     draw.text(xy=(org_config["serial_number_horizontal_pos"],
