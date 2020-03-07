@@ -13,7 +13,7 @@ import pic_email as wc
 from model import update_status
 from model import insert_people
 from jobs import SendEmailJob
-
+from utils import get_smtp_url
 app = Flask(__name__)
 send_email_job = SendEmailJob()
 # 0:KEY is not right
@@ -186,8 +186,14 @@ def update_config():
     if result == False:
         return response
     try:
-        orgconfig=utils.get_org_config()
-        emailconfig=utils.get_email_config()
+        referer = request.headers.get('Referer', None)
+        if referer is not None:
+            referer = referer.replace('admin', 'index')
+            message['frontend_url'] = referer
+        if message.get('username'): # email admin address
+            message['server_address'] = get_smtp_url(message.get('username')) # email smtp address
+        orgconfig = utils.get_org_config()
+        emailconfig = utils.get_email_config()
         for domain in message:
             if domain == "token" or len(domain) == 0:
                 continue
@@ -199,7 +205,7 @@ def update_config():
         utils.update_email_config(emailconfig)
     except Exception as e:
         logging.info(e) 
-    return_json = {'code': 0, 'message': '', 'data': None}
+    return_json = {'code': 0, 'message': 'update config successfully', 'data': None}
     response.data = return_msg(return_json)
     return response
 

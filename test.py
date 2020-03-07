@@ -12,6 +12,8 @@ from model import insert_people
 from pic_email import write_to_pic
 from app import app
 from utils import get_smtp_url
+from utils import get_email_config
+from utils import get_org_config
 
 class UtilTest(unittest.TestCase):
     def test_getSMTP_url(self):
@@ -54,12 +56,23 @@ class WebAPITests(unittest.TestCase):
         response = client.post('/api/addUserData',json=json_data)
         res_json = json.loads(response.data.decode('ascii'))
         self.assertEqual(res_json['code'], 1)
+
     def test_updateOrgConfig(self):
         client = app.test_client()
-        json_data = {"token":"1234", "website":"https://community.wuhan2020.org.cn/","password":"pswd"}
-        response = client.post('/api/updateOrgConfig',json=json_data)
+        json_data = {"token": "1234",
+                     "website":"https://community.wuhan2020.org.cn/",
+                     "username": "admin@example.org",
+                     "password": "pswd"}
+        response = client.post('/api/updateOrgConfig',
+                                json=json_data,
+                                headers={'Referer': 'http://example.org/admin.html'})
         res_json = json.loads(response.data.decode('ascii'))
         self.assertEqual(res_json['code'], 0)
+        email_config = get_email_config()
+        self.assertEqual(email_config["server_address"], "smtp.example.org")
+        org_config = get_org_config()
+        self.assertEqual(org_config["frontend_url"], 'http://example.org/index.html')
+
     def test_submitSendEmailRequest(self):
         client = app.test_client()
         json_data = {"token": "1234", "action": "send"}
