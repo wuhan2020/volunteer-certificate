@@ -4,6 +4,9 @@ import logging
 
 import yagmail
 
+def get_smtp_url(admin_email):
+    return 'smtp.' + admin_email.split('@')[-1]
+
 def get_email_config():
     product_file = 'email.json'
     dev_file = 'config/email.json.config'

@@ -43,7 +43,7 @@ curl http://localhost:5000/api/getUserInfo?token=token0
 ### 1.通过token获取用户信息
 类型：get请求 
 
-`https://api.wuhan2020.org.cn/api/getUserInfo?token=dsfasgdafgaggsdagdsg`
+`/api/getUserInfo?token=dsfasgdafgaggsdagdsg`
 
 #### 成功：
 ```json
@@ -67,7 +67,7 @@ curl http://localhost:5000/api/getUserInfo?token=token0
 ```
 ### 2. 用户提交信息：
 
-`https://api.wuhan2020.org.cn/api/submitUserInfo`
+`/api/submitUserInfo`
 
 
 入参
@@ -79,23 +79,7 @@ curl http://localhost:5000/api/getUserInfo?token=token0
 }
 ```
 
-结果
-#### 成功：
-```json
-   {
-      "code":0,      // 成功
-      "message": "",
-      "data":null
-   }
-```
-#### 失败：
-```json
-   {
-      "code":1,   // 失败
-      "message": "网络异常",
-      "data":null    
-   }
-```
+结果同 1.
 ### 3.添加新名字（管理员）
  `/api/addUserData`
  入参
@@ -107,23 +91,7 @@ curl http://localhost:5000/api/getUserInfo?token=token0
 }
 ```
 
-结果
-#### 成功：
-```json
-   {
-      "code":0,      // 成功
-      "message": "",
-      "data":null
-   }
-```
-#### 失败：
-```json
-   {
-      "code":1,   // 失败
-      "message": "网络异常",
-      "data":null    
-   }
-```
+结果同 1.
 ### 4. Upload template image
  `/api/uploadImage`
 
@@ -136,7 +104,23 @@ Content-Type: multipart/form-data
 name="template"
 data="image raw content"
 
-json response, same format as 2.
+Json response, same format as 1.
+### 5. Update configuration
+`updateOrgConfig`
+```json
+{
+    "token":"abc",  // admin-token
+    "name": "org_name",
+    "website": "org_website",
+    "name_horizontal_pos": "name_horizontal_pos",
+    "name_vertical_pos": "name_vertical_pos",
+    "email": {
+        "username": "org_email_username",
+        "password": "org_email_password"
+      }
+}
+```
+Json response, same format as 1.
 
 ## 二、数据表
 
@@ -168,11 +152,11 @@ json response, same format as 2.
 
  调用接口**2.用户提交信息：**提交到后端
  
-  ### 第4步. 后端服务生成图片，发送邮件
+### 第7步. 后端服务生成图片，发送邮件
   #### 后端更新本行记录：name 为新称呼，状态置为 2
   #### 调用生成图片接口，更新pic_url，更新status 为3
   #### 调用发邮件接口 更新status 为4  
   状态2后每一次断掉可以重试
 
-### 第7步，活动组织者通过指定接口查询用户邮件发送的状态
+### 第8步，活动组织者通过指定接口查询用户邮件发送的状态
   比如还有多少封邮件没发完
