@@ -196,7 +196,7 @@ def update_config():
         orgconfig = utils.get_org_config()
         emailconfig = utils.get_email_config()
         for domain in message:
-            if domain == "token" or len(message[domain]) == 0:
+            if domain == "token" or len(str(message[domain])) == 0:
                 continue
             if domain in orgconfig:
                 orgconfig[domain] = message[domain]
