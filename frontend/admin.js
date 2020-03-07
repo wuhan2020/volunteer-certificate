@@ -263,7 +263,7 @@ export default class Admin extends React.Component {
               </button>
             </div>
             <div className="form-group col-md-4">
-              <button className="btn btn-primary" onClick={(e) => {
+              <button type="button" className="btn btn-primary" onClick={(e) => {
                 this.submitSendEmailRequest();
               }}>
                 Send Emails
