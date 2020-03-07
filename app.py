@@ -102,8 +102,9 @@ def send_email():
             return_json = {'code': 0, 'message': 'You have submitted your information successful, the certificate is sent to you,  please check your email', 'data': None}
             response.data = return_msg(return_json)
             return response
-        except : #发送邮件或者创建图片错误 可能是邮件有问题
-            return return_msg("5")
+        except Exception as e: #发送邮件或者创建图片错误 可能是邮件有问题
+            logging.info(e)
+            return response
     else:
         response.data = return_msg(return_json)
         return response  # Key被用过了
