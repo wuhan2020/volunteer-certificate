@@ -1,5 +1,6 @@
-from tinydb import TinyDB, Query, where
+import logging
 
+from tinydb import TinyDB, Query, where
 
 # class People
 # prop name:string 姓名
@@ -26,7 +27,7 @@ def insert_people(email, name, number='', token=None):
     People = Query()
     exist_list = db.search(People.email == email)
     if len(exist_list):
-        print('Duplicate entry for key email')
+        logging.info('Duplicate entry for key email %s' % email)
         db.close()
         raise EmailDuplicateException()
     if token:

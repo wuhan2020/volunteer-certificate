@@ -35,7 +35,7 @@ class WebAPITests(unittest.TestCase):
 
     def test_addUser(self):
         client = app.test_client()
-        json_data = {"token":"1234", "email":"abc@example.org"}
+        json_data = {"token":"1234", "email":["abc@example.org", "abc.org"]}
         response = client.post('/api/addUserData',
             json=json_data)
         response = client.post('/api/addUserData',json=json_data)

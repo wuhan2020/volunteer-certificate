@@ -103,7 +103,7 @@ curl http://localhost:5000/api/getUserInfo?token=token0
 ```json
 {
     "token":"abc",  // admin-token
-    "email":"foo@example.org"
+    "email":["foo@example.org"]
 }
 ```
 
