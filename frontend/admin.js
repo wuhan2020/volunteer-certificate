@@ -98,7 +98,7 @@ export default class Admin extends React.Component {
   postFormData(api) {
     let headers = new Headers();
     headers.append('Token', this.state.token);
-    headers.append('Content-Type', 'multipart/form-data');
+    // headers.append('Content-Type', 'multipart/form-data');
     const formData = new FormData();
     formData.append('template', this.state.file);
     return  fetch(api, {

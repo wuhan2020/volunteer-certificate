@@ -125,7 +125,7 @@ def save_image():
         os.rename(image_path, os.path.join(basedir, 'pic.jpg'))
     except Exception as e:
         logging.info(e)
-    return_json = {'code': 0, 'message': '', 'data': None}
+    return_json = {'code': 0, 'message': 'upload successfully', 'data': None}
     response.data = return_msg(return_json)
     return response    
 
