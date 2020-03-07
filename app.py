@@ -196,7 +196,7 @@ def update_config():
         orgconfig = utils.get_org_config()
         emailconfig = utils.get_email_config()
         for domain in message:
-            if domain == "token" or len(domain) == 0:
+            if domain == "token" or len(message[domain]) == 0:
                 continue
             if domain in orgconfig:
                 orgconfig[domain] = message[domain]
@@ -235,6 +235,8 @@ def email_task():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    if not os.path.isdir("images"):
+        os.mkdir("images")
     host_name = '0.0.0.0'
     if os.environ.get('host'):
         host_name = os.environ['host']
