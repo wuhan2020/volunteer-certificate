@@ -49,14 +49,13 @@ export default class Admin extends React.Component {
     const { host } = this.state;
     let api = `${host}api/updateOrgConfig`;
     let data = {
+      token: this.state.token,
       name: this.state.org_name,
       website: this.state.org_website,
       name_horizontal_pos: this.state.name_horizontal_pos,
       name_vertical_pos: this.state.name_vertical_pos,
-      email: {
-        username: this.state.org_email_username,
-        password: this.state.org_email_password
-      }
+      username: this.state.org_email_username,
+      password: this.state.org_email_password
     }
     this.postJsonData(api, data)
         .then( res => res.json() )

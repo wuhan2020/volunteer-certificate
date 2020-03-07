@@ -114,10 +114,8 @@ Json response, same format as 1.
     "website": "org_website",
     "name_horizontal_pos": "name_horizontal_pos",
     "name_vertical_pos": "name_vertical_pos",
-    "email": {
-        "username": "org_email_username",
-        "password": "org_email_password"
-      }
+    "username": "org_email_username",
+    "password": "org_email_password"
 }
 ```
 Json response, same format as 1.

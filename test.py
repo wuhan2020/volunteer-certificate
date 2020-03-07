@@ -56,7 +56,7 @@ class WebAPITests(unittest.TestCase):
         self.assertEqual(res_json['code'], 1)
     def test_updateOrgConfig(self):
         client = app.test_client()
-        json_data = {"token":"1234", "website":"https://community.wuhan2020.org.cn/"}
+        json_data = {"token":"1234", "website":"https://community.wuhan2020.org.cn/","password":"pswd"}
         response = client.post('/api/updateOrgConfig',json=json_data)
         res_json = json.loads(response.data.decode('ascii'))
         self.assertEqual(res_json['code'], 0)

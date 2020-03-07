@@ -187,12 +187,16 @@ def update_config():
         return response
     try:
         orgconfig=utils.get_org_config()
+        emailconfig=utils.get_email_config()
         for domain in message:
-            if message=="token":
+            if domain == "token" or len(domain) == 0:
                 continue
             if domain in orgconfig:
-                orgconfig[domain]=message[domain]  #usage: name="some org"&website="website@website.org"&token="[admin token]", update name&website    
+                orgconfig[domain] = message[domain]
+            elif domain in emailconfig:
+                emailconfig[domain] = message[domain]
         utils.update_org_config(orgconfig)
+        utils.update_email_config(emailconfig)
     except Exception as e:
         logging.info(e) 
     return_json = {'code': 0, 'message': '', 'data': None}
