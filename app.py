@@ -124,14 +124,14 @@ def save_image():
     return_json = {'code': 1, 'message': '网络异常', 'data': None}
     response.data = return_msg(return_json)
     # get the image file path
-    image_path = request.files.get('template', False)
+    image_file = request.files.get('template', False)
     # Todo: security check of image_path
-    if result == False or image_path == False:
+    if result == False or image_file == False:
         return response
     # overwrite pic.jpg
     basedir = os.path.dirname(__file__)
     try:
-        os.rename(image_path, os.path.join(basedir, 'pic.jpg'))
+        image_file.save(os.path.join(basedir, 'pic.jpg'))
     except Exception as e:
         logging.info(e)
     return_json = {'code': 0, 'message': 'upload successfully', 'data': None}

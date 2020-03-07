@@ -25,12 +25,14 @@ def write_to_pic(name, email, token):  # 执行完这个方法后生成一个 re
               org_config['name_vertical_pos']),
               text=name, font=font_name,
               fill=(0, 0, 0))  # 写上名字 x使用了居中
-    draw.text(xy=(org_config["serial_number_horizontal_pos"],
-                  org_config["serial_number_vertical_pos"]),
-              text=number, font=font_number)  # 写上编号
-    draw.text((org_config["date_horizontal_pos"],
-               org_config["date_vertical_pos"]),
-               date_str , font = setFontdate , fill = (0 , 0 , 0))  # 写上日期
+    if org_config["serial_number_horizontal_pos"] > 0:
+        draw.text(xy=(org_config["serial_number_horizontal_pos"],
+                    org_config["serial_number_vertical_pos"]),
+                text=number, font=font_number)  # 写上编号
+    if org_config["date_horizontal_pos"] > 0:
+        draw.text((org_config["date_horizontal_pos"],
+                org_config["date_vertical_pos"]),
+                date_str , font = setFontdate , fill = (0 , 0 , 0))  # 写上日期
     image_file = 'images/%s.png' % token
     im.save(image_file)
     update_status(email, 3)
