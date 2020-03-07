@@ -84,7 +84,7 @@ def send_email():
             response.data = return_msg(return_json)
             return response
         except : #发送邮件或者创建图片错误 可能是邮件有问题
-            return return_msg("5")
+            return_json = {'code': 1, 'message': '后端服务异常', 'data': None} #生成图片 或 发送邮件发生错误。
     else:
         response.data = return_msg(return_json)
         return response  # Key被用过了
