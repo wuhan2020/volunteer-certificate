@@ -35,8 +35,9 @@ class CertificationContent extends React.Component {
             .then( (result) => {
                 const { code, data, message } = result;
                 let email = '';
-                if(code == 0)
+                if (code == 0) {
                     email = data.email;
+                }
                    this.setState({
                      email,
                      message,
