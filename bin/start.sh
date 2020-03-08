@@ -1,3 +1,3 @@
 #!/bin/bash
 # start up shell script
-nohup python3 app.py >>~/logs/volunteer-certificate.log &
+nohup gunicorn --bind localhost:5000 app:app >>~/logs/volunteer-certificate.log &
