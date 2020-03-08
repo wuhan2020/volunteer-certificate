@@ -1,6 +1,11 @@
 name: frontend
 
-on: [push, pull_request]
+on:
+  # only fired on PR against master branch or master push
+  push:
+    branches: master
+  pull_request:
+    branches: master
 
 jobs:
   Build:
