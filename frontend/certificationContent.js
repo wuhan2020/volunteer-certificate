@@ -33,10 +33,12 @@ class CertificationContent extends React.Component {
         this.fetchCertificationApi(api, null, 'GET')
             .then( res => res.json() )
             .then( (result) => {
-                const { code, data: {email, name}, message } = result;
+                const { code, data, message } = result;
+                let email = '';
+                if(code == 0)
+                    email = data.email;
                    this.setState({
                      email,
-                     name,
                      message,
                      status: code == 0 ? 'none' : 'error'
                    });
