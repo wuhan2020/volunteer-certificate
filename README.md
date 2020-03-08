@@ -1,11 +1,29 @@
 # volunteer-certificate
 ![Python application](https://github.com/wuhan2020/volunteer-certificate/workflows/Python%20application/badge.svg)
-# 安装并启动项目(How to build dev environment):
+# 安装并启动项目:
 ## Dependency Installation
 ```shell
 python3 -m pip install --user -r requirements.txt
 ```
-## Startup shell
+## Prepare database file
+You need to put `data.json` in the project root directory. You can copy it from sample data. Extra data can be added using frontend admin webpage.
+```shell
+cp config/data.json ./
+```
+## Edit config file
+Optionally you can make a file `email.json` from the template `config/email.json.config` and edit the configuration; make a file `org.json` from the template `config/org.json.config` and edit the configuration.
+
+## Start the server in development mode
+To start the server, run the following command in project root directory
+```shell
+python3 app.py
+```
+To test whether the server works, you can use `curl`
+```shell
+curl http://localhost:5000/api/getUserInfo?token=token0
+```
+
+## Startup shell(optional)
 
 You can use shell script to start or stop the application 
 ```shell script
@@ -18,22 +36,6 @@ cd volunteer-certificate
 
 # restart
 ./bin/restart.sh
-```
-
-## Extra data file
-You need to put `data.json`, `pic.jpg` in the project root directory.
-```shell
-cp config/data.json ./
-```
-Optionally you can make a file `email.json` from the template `config/email.json.config` and edit the configuration; make a file `org.json` from the template `config/org.json.config` and edit the configuration.
-
-To start the server, run the following command in project root directory
-```shell
-python3 app.py
-```
-To test whether the server works, you can use `curl`
-```shell
-curl http://localhost:5000/api/getUserInfo?token=token0
 ```
 # 志愿者证书
 
