@@ -1,6 +1,12 @@
 # https://github.com/marketplace/actions/image-actions
 name: Compress images
-on: pull_request
+
+on:
+  # only fired on PR against master branch
+  pull_request:
+    branches: master
+
+
 jobs:
   build:
     name: calibreapp/image-actions
