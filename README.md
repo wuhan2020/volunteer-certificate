@@ -25,17 +25,15 @@ You need to put `data.json`, `pic.jpg` in the project root directory.
 ```shell
 cp config/data.json ./
 ```
-Optionally you can make a file `email.json` and edit the configuration.
-```shell
-cp config/email.json.config email.json
-```
+Optionally you can make a file `email.json` from the template `config/email.json.config` and edit the configuration; make a file `org.json` from the template `config/org.json.config` and edit the configuration.
+
 To start the server, run the following command in project root directory
 ```shell
 python3 app.py
 ```
 To test whether the server works, you can use `curl`
 ```shell
-curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
+curl http://localhost:5000/api/getUserInfo?token=token0
 ```
 # 志愿者证书
 
@@ -45,7 +43,7 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 ### 1.通过token获取用户信息
 类型：get请求 
 
-`https://api.wuhan2020.org.cn/api/getUserInfo?token=dsfasgdafgaggsdagdsg`
+`/api/getUserInfo?token=dsfasgdafgaggsdagdsg`
 
 #### 成功：
 ```json
@@ -69,9 +67,8 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 ```
 ### 2. 用户提交信息：
 
-`https://api.wuhan2020.org.cn/api/submitUserInfo`
+`/api/submitUserInfo`
 
-类型：post请求  post的Content-Type一定是application/json
 
 入参
 
@@ -82,30 +79,58 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 }
 ```
 
-结果
-#### 成功：
+结果同 1.
+### 3.添加新名字（管理员）
+ `/api/addUserData`
+ 入参
+
 ```json
-   {
-      "code":0,      // 成功
-      "message": "",
-      "data":null
-   }
-```
-#### 失败：
-```json
-   {
-      "code":1,   // 失败
-      "message": "网络异常",
-      "data":null    
-   }
+{
+    "token":"abc",  // admin-token
+    "email":["foo@example.org"]
+}
 ```
 
- ### 3.添加新用户（管理员）
- `http://47.75.179.6:5000/api/addUserData`
+结果同 1.
+### 4. Upload template image
+ `/api/uploadImage`
 
+Required Header:
+```
+Token: abc
+Content-Type: multipart/form-data
+```
+
+name="template"
+data="image raw content"
+
+Json response, same format as 1.
+### 5. Update configuration
+`/api/updateOrgConfig`
+```json
+{
+    "token":"abc",  // admin-token
+    "name": "org_name",
+    "website": "org_website",
+    "name_horizontal_pos": "name_horizontal_pos",
+    "name_vertical_pos": "name_vertical_pos",
+    "username": "org_email_username",
+    "password": "org_email_password"
+}
+```
+Json response, same format as 1.
+### 6. Email query
+`/api/email`
+```json
+{
+   "token":"abc",
+   "action": "send", // or query
+}
+```
+Json response, same format as 1.
+```
 ## 二、数据表
 
-按照github 拼音顺序进行排列
 
 | 字段                                                  | 类型                                                | 名称   | 描述                                      |
 | ----------------------------------------------------- | ---------- | ------------------------------------------- | ------------ |
@@ -114,28 +139,31 @@ curl http://127.0.0.1:5000/api/getUserInfo?token=dsfasgdafgaggsdagdsg
 | name       | 字符型    | 称呼 |    |
 | email            | 字符型         | 邮箱 |     |
 | number        | 字符型     | 证书编号 |  在数据源导入时候已经生成   |
-| pic_url        | 字符型     | 生成证书图片名称 |     |
 | status           | 整型        | 状态   | 0：初始化 1 已经发送提醒邮件 2：用户已提交 3：图片已经生成 4：证书邮件已发出 |
 
 ## 三、数据流
- ### 第1步. 后端项目批量给用户邮箱发邮件
-   将为当前邮箱状态为0的邮箱生成token（可以定时任务扫描），并更新本行记录的token为新token
-   每个邮件的关键内容为确认称呼的ur：
+### 第1步，活动组织者提交证书图片模板和相关参数
+### 第2步，活动组织者提交组织相关信息、邮箱相关信息
+### 第3步，活动组织者提交志愿者邮箱列表
+### 第4步. 后端项目批量给用户邮箱发邮件
+   将为当前邮箱状态为0的邮箱生成token，并更新本行记录的token为新token
+发送邮件给志愿者，每个邮件的关键内容为一个带有 token 的链接，比如：
 `https://community.wuhan2020.org.cn/zh-cn/certification/index.html?token=dsfasgdafgaggsdagdsg`
 
 邮件发送完毕后，状态置为 1
 
- ### 第2步. 用户打开网页
+### 第5步. 用户打开网页
  调用接口**1.通过token获取用户信息**展示数据
 
- ### 第3步. 用户修改并提交数据
+### 第6步. 用户修改并提交数据，证书发到用户邮箱
 
  调用接口**2.用户提交信息：**提交到后端
  
-  ### 第4步. 后端服务生成图片，发送邮件
+### 第7步. 后端服务生成图片，发送邮件
   #### 后端更新本行记录：name 为新称呼，状态置为 2
   #### 调用生成图片接口，更新pic_url，更新status 为3
-  #### 调用发邮件接口 更新status 为4
-  
-  状态2后每一次断掉可以重试（定时任务扫描）
-  
+  #### 调用发邮件接口 更新status 为4  
+  状态2后每一次断掉可以重试
+
+### 第8步，活动组织者通过指定接口查询用户邮件发送的状态
+  比如还有多少封邮件没发完

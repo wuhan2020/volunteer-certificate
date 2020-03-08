@@ -1,0 +1,12 @@
+{
+    "name": "wuhan2020 开源社区",
+    "website": "https://community.wuhan2020.org.cn/",
+    "frontend_url": "https://community.wuhan2020.org.cn/zh-cn/certification/index.html",
+    "admin_token": "1234",
+    "name_horizontal_pos": 375,
+    "name_vertical_pos": 470,
+    "serial_number_horizontal_pos": 310,
+    "serial_number_vertical_pos": 285,
+    "date_horizontal_pos": 434,
+    "date_vertical_pos": 900
+}

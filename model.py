@@ -1,5 +1,6 @@
-from tinydb import TinyDB, Query, where
+import logging
 
+from tinydb import TinyDB, Query, where
 
 # class People
 # prop name:string 姓名
@@ -17,13 +18,18 @@ def gen_token(seed):
     # pass
     return seed
 
-
+class EmailDuplicateException(Exception):
+    def __init__(self):
+        pass
+        
 def insert_people(email, name, number='', token=None):
     db = TinyDB("data.json")
     People = Query()
     exist_list = db.search(People.email == email)
     if len(exist_list):
-        raise FileExistsError('Duplicate entry for key email')
+        logging.info('Duplicate entry for key email %s' % email)
+        db.close()
+        raise EmailDuplicateException()
     if token:
         print('Warning: It is not safe to specify the token value. '
               'Just let it be None and it will be generated automatically')

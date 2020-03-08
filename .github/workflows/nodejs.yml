@@ -1,0 +1,29 @@
+name: frontend
+
+on: [push, pull_request]
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Npm install and build
+      run: |
+        cd frontend
+        npm install
+        echo "export const API_URL = 'http://localhost:5000/';" > config-local.js
+        npm run build
+    - name: Upload results as an artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: bundle-js
+        path: './frontend/dist/bundle.js'
