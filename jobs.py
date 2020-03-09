@@ -2,7 +2,6 @@
 import random
 import time
 import uuid
-import logging
 import threading
 
 from tinydb import TinyDB, Query
@@ -10,6 +9,8 @@ from tinydb import TinyDB, Query
 from utils import get_email_config, send_email
 from utils import get_org_config
 from model import update_status_and_token
+from app_instance import app
+from app_instance import logger
 
 class SendEmailJob:
     def __init__(self):
@@ -18,7 +19,7 @@ class SendEmailJob:
     def start(self):
         if self.finished():
             self.job = threading.Thread(target=self.send_notice_email)
-            logging.info('send email job started')
+            logger.info('send email job started')
             self.job.start()
             self.is_finished = False
     def finished(self):
@@ -56,5 +57,5 @@ class SendEmailJob:
         db.close()
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger.setLevel(logging.DEBUG)
     SendEmailJob().start()

@@ -23,7 +23,8 @@ To test whether the server works, you can use `curl`
 curl http://localhost:5000/api/getUserInfo?token=token0
 ```
 
-## Startup shell(optional)
+## Startup shell(production mode)
+Install `gunicorn` first by `python3 -m pip install --users gunicorn`. Also make sure the user you used to deploy the app does not have sudo privilege for security reason.
 
 You can use shell script to start or stop the application 
 ```shell script
@@ -36,6 +37,15 @@ cd volunteer-certificate
 
 # restart
 ./bin/restart.sh
+```
+The convenient script will run the wsgi server in backend, which listens `localhost:5000`. Finally you need to configure your nginx proxy to forward request to `localhost:5000`.
+```
+	location / {
+		# First attempt to serve request as file, then
+		# as directory, then fall back to displaying a 404.
+		proxy_pass http://localhost:5000/;
+		proxy_redirect     off;
+	}
 ```
 # 志愿者证书
 
