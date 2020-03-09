@@ -1,6 +1,7 @@
 import json
 import os
-import logging
+from app_instance import app
+from app_instance import logger
 
 import yagmail
 
@@ -54,7 +55,7 @@ def send_email(to_email, subject, content, attachment=None):
     try:
         yag.send(to_email, subject, content, attachment)
     except Exception as e:
-        logging.info('send email to %s failed; Reason:' % to_email)
-        logging.info(e)
+        logger.info('send email to %s failed; Reason:' % to_email)
+        logger.info(e)
         return False
     return True
