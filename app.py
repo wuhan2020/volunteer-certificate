@@ -12,9 +12,10 @@ from tinydb import Query , TinyDB
 import pic_email as wc
 from model import update_status
 from model import insert_people
+from app_instance import app
+from app_instance import logger
 from jobs import SendEmailJob
 from utils import get_smtp_url
-app = Flask(__name__)
 send_email_job = SendEmailJob()
 # 0:KEY is not right
 # 1:KEY is right
@@ -103,7 +104,7 @@ def send_email():
             response.data = return_msg(return_json)
             return response
         except Exception as e: #发送邮件或者创建图片错误 可能是邮件有问题
-            logging.info(e)
+            logger.info(e)
             return response
     else:
         response.data = return_msg(return_json)
@@ -134,7 +135,7 @@ def save_image():
     try:
         image_file.save(os.path.join(basedir, 'pic.jpg'))
     except Exception as e:
-        logging.info(e)
+        logger.info(e)
     return_json = {'code': 0, 'message': 'upload successfully', 'data': None}
     response.data = return_msg(return_json)
     return response    
@@ -158,14 +159,14 @@ def add_data():
         return response
     for email in email_list:
         if check_email(email) == False:
-            logging.info('invalid email %s' % email)
+            logger.info('invalid email %s' % email)
             continue
         try:       
             insert_people(email, '')
         except KeyError:
             pass
         except Exception as e:
-            logging.info(e)
+            logger.info(e)
     return_json = {'code': 0, 'message': 'update emails successfully', 'data': None}
     response.data = return_msg(return_json)
     return response
@@ -205,7 +206,7 @@ def update_config():
         utils.update_org_config(orgconfig)
         utils.update_email_config(emailconfig)
     except Exception as e:
-        logging.info(e) 
+        logger.info(e)
     return_json = {'code': 0, 'message': 'update config successfully', 'data': None}
     response.data = return_msg(return_json)
     return response
@@ -234,7 +235,7 @@ def email_task():
     return response
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger.setLevel(logging.INFO)
     if not os.path.isdir("images"):
         os.mkdir("images")
     host_name = '0.0.0.0'
@@ -244,4 +245,4 @@ if __name__ == '__main__':
         port_name = int(os.environ['port'])
     else:
         port_name = 5000
-    app.run(host=host_name, port=port_name)
+    app.run(host=host_name, port=port_name, debug=True)
