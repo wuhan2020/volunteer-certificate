@@ -35,7 +35,10 @@ def check_email(email):
     return False
 
 def confirm_token(token): #finish
-    db = TinyDB("data.json")
+    product_file = 'data.json'
+    dev_file = 'config/data.json'
+    dbfile = product_file if os.path.exists(product_file) else dev_file
+    db = TinyDB(dbfile)
     People = Query()
     res = db.search(People.token == token)
     db.close()
