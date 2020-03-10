@@ -41,7 +41,6 @@ def confirm_token(token): #finish
     db = TinyDB(dbfile)
     People = Query()
     res = db.search(People.token == token)
-    print(res)
     db.close()
     if len(res) != 0:
         return res[0]
