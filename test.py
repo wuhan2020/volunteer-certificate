@@ -30,7 +30,8 @@ class WebAPITests(unittest.TestCase):
         client = app.test_client()
         response = client.post('/api/submitUserInfo', 
             json={"token":"token0", "name":"new name"})
-        self.assertEqual(response.status_code, 200)
+        res_json = json.loads(response.data.decode('ascii'))
+        self.assertEqual(res_json['code'], 0)
     def test_submitPictures(self):
         client = app.test_client()
         client.options('/api/uploadImage')
