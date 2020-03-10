@@ -53,6 +53,12 @@ def update_status(email, status=1):
     db.update({'status': status}, where("email") == email)
     db.close()
 
+def update_name(email, name):
+    db = TinyDB("data.json")
+    People = Query()
+    db.update({'name': name}, where("email") == email)
+    db.close()
+    
 def update_status_and_token(email, status=1, token=""):
     db = TinyDB("data.json")
     People = Query()
