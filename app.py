@@ -10,7 +10,7 @@ from flask import Response
 from tinydb import Query , TinyDB
 
 import pic_email as wc
-from model import update_status
+from model import update_status, update_name
 from model import insert_people
 from app_instance import app
 from app_instance import logger
@@ -98,6 +98,7 @@ def send_email():
     email = result['email']
     if is_token_unused(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
         update_status(email, 2)
+        update_name(email,name)
         try:
             wc.write_to_pic(name,email,token)
             return_json = {'code': 0, 'message': 'You have submitted your information successful, the certificate is sent to you,  please check your email', 'data': None}
