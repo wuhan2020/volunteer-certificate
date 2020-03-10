@@ -30,7 +30,8 @@ class WebAPITests(unittest.TestCase):
         client = app.test_client()
         response = client.post('/api/submitUserInfo', 
             json={"token":"token0", "name":"new name"})
-        self.assertEqual(response.status_code, 200)
+        res_json = json.loads(response.data.decode('ascii'))
+        self.assertEqual(res_json['code'], 0)
     def test_submitPictures(self):
         client = app.test_client()
         client.options('/api/uploadImage')
@@ -93,7 +94,7 @@ class SubmitUserInfoTests(unittest.TestCase):
             img = Image.new('RGB', (750, 1200))
             img.save('pic.jpg')
         with patch("yagmail.SMTP") as mock_smtp:
-            write_to_pic('test name%d'%(int(time.time())), 'muxxs@foxmail.com', 'idle_token')
+            write_to_pic('test name', 'muxxs@foxmail.com', 'idle_token')
 
     def test_notice_email(self):
         with patch("yagmail.SMTP"):
