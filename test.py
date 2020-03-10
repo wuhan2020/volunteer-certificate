@@ -2,7 +2,6 @@ import os
 from unittest.mock import patch
 import unittest
 from shutil import copyfile
-import time
 
 import json
 import yagmail
