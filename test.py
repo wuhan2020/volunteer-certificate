@@ -2,6 +2,7 @@ import os
 from unittest.mock import patch
 import unittest
 from shutil import copyfile
+import time
 
 import json
 import yagmail
@@ -92,7 +93,7 @@ class SubmitUserInfoTests(unittest.TestCase):
             img = Image.new('RGB', (750, 1200))
             img.save('pic.jpg')
         with patch("yagmail.SMTP") as mock_smtp:
-            write_to_pic('test name', 'muxxs@foxmail.com', 'idle_token')
+            write_to_pic('test name%d'%(int(time.time())), 'muxxs@foxmail.com', 'idle_token')
 
     def test_notice_email(self):
         with patch("yagmail.SMTP"):
