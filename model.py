@@ -1,4 +1,4 @@
-import logging
+from app_instance import logger
 
 from tinydb import TinyDB, Query, where
 
@@ -31,7 +31,7 @@ def insert_people(email, name, number='', token=None):
         db.close()
         raise EmailDuplicateException()
     if token:
-        print('Warning: It is not safe to specify the token value. '
+        logger.warning('It is not safe to specify the token value. '
               'Just let it be None and it will be generated automatically')
     else:
         token = gen_token(email)
