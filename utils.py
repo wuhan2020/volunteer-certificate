@@ -1,5 +1,8 @@
 import json
 import os
+
+from flask import Response
+
 from app_instance import app
 from app_instance import logger
 
@@ -59,3 +62,17 @@ def send_email(to_email, subject, content, attachment=None):
         logger.info(e)
         return False
     return True
+
+
+def response_json(code=0, message='success', data=None):
+    response = Response()
+    response.headers['Content-Type'] = 'application/json'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    data = {
+        'code': code,
+        'message': message,
+        'data': data
+    }
+    response.data = json.dumps(data)
+    return response
