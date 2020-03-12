@@ -10,7 +10,7 @@ from utils import send_email, get_org_config
 
 def write_to_pic(name, email, token):  # 执行完这个方法后生成一个 result.png 图片 可加入email参数
     number = get_number(email)  # 用这个方法获取到编号
-    date_str = datetime.datetime.strftime(datetime.datetime.now(), u'%Y{0}%m{1}%d{2}').format(*'年月日')  # 获取日期
+    date_str = datetime.datetime.strftime(datetime.datetime.now(), '%Y{0}%m{1}%d{2}').format(*'年月日')  # 获取日期
     update_status(email)  # use 参数 变为1  生成了证书
     org_config = get_org_config()    
     im = Image.open("pic.jpg")

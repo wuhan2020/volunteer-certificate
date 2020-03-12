@@ -51,6 +51,24 @@ The convenient script will run the wsgi server in backend, which listens `localh
 
 ## 一、前端接口
 
+所有接口按如下格式返回，只有code===0时表示接口处理正确，其余情况前端提示可参考具体code值和message内容
+
+```json
+{
+  "code": 0,
+  "data": null,
+   "message": "success"
+}
+```
+
+**错误值**
+
+|  code   | 错误  |
+|  ----  | ----  |
+| 1  | 缺少name字段 |
+| 2  | token无效 |
+| 3  | 已成功发送过邮件 |
+| 4  | 制作图片或发送邮件时出错 |
 
 ### 1.通过token获取用户信息
 类型：get请求 
