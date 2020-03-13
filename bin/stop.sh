@@ -7,8 +7,8 @@ then
     exit 0
 fi
  
-id=$(lsof -i:5000|tail -1|awk '"$1"!=""{print $2}')
+id=$(cat /tmp/gunicorn-vc.pid)
 kill $id > /dev/null 2>&1
 
-echo "Process name=$name($id) kill!"
+echo "Process name=gunicorn($id) kill!"
 exit 0
