@@ -9,7 +9,7 @@ class Certification extends React.Component {
     }
     render() {
         const dataSource = {};
-        const logoUrl = '/wuhan2020-logo-white.png';
+        const logoUrl = './wuhan2020-logo-white.png';
         return (
             <main>
                 <div className="certification-page">

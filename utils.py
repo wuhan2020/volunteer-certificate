@@ -1,6 +1,10 @@
 import json
 import os
-import logging
+
+from flask import Response
+
+from app_instance import app
+from app_instance import logger
 
 import yagmail
 
@@ -49,12 +53,26 @@ def send_email(to_email, subject, content, attachment=None):
                        smtp_skip_login=email_json["skip_auth"])
     # 邮箱正文
     # contents = ['您好，附件中有您的证书']
-    print("send to " + to_email, 'with subject', subject)
+    logger.info("send to " + to_email, 'with subject', subject)
     # 发送邮件
     try:
         yag.send(to_email, subject, content, attachment)
     except Exception as e:
-        logging.info('send email to %s failed; Reason:' % to_email)
-        logging.info(e)
+        logger.info('send email to %s failed; Reason:' % to_email)
+        logger.info(e)
         return False
     return True
+
+
+def response_json(code=0, message='success', data=None):
+    response = Response()
+    response.headers['Content-Type'] = 'application/json'
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = '*'
+    data = {
+        'code': code,
+        'message': message,
+        'data': data
+    }
+    response.data = json.dumps(data)
+    return response

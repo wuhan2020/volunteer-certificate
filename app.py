@@ -10,11 +10,13 @@ from flask import Response
 from tinydb import Query , TinyDB
 
 import pic_email as wc
-from model import update_status
+from model import update_status, update_name
 from model import insert_people
+from app_instance import app
+from app_instance import logger
 from jobs import SendEmailJob
-from utils import get_smtp_url
-app = Flask(__name__)
+from utils import get_smtp_url, response_json
+
 send_email_job = SendEmailJob()
 # 0:KEY is not right
 # 1:KEY is right
@@ -34,6 +36,8 @@ def check_email(email):
     return False
 
 def confirm_token(token): #finish
+    if len(token) <= 0:
+        return False
     db = TinyDB("data.json")
     People = Query()
     res = db.search(People.token == token)
@@ -56,7 +60,7 @@ def is_token_unused(token):#确定一下Key有没有被用过
     People = Query()
     res = db.search(People.token == token)
     db.close()
-    if res and res[0]["status"] == 1:
+    if res and res[0]["status"] <= 3:   # 如果邮件发送失败，则都可以重试
         return True
     else:
         return False
@@ -79,35 +83,35 @@ def token():
 
 @app.route('/api/submitUserInfo',methods = ['POST', 'OPTIONS'])
 def send_email():
-    if request.method == 'POST':
-        message = json.loads(request.get_data(as_text = True))
-        name = message['name']
-        token = message['token']
-        result = confirm_token(token)  # 没有每个人唯一的Key
     response = Response()
     response.headers['Content-Type'] = 'application/json'
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Headers'] = '*'
     if request.method == 'OPTIONS':
         return response
-    return_json = {'code': 1, 'message': '网络异常', 'data': None}
-    response.data = return_msg(return_json)
-    if result == False:
-        return response
-    email = result['email']
-    if is_token_unused(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
-        update_status(email, 2)
-        try:
-            wc.write_to_pic(name,email,token)
-            return_json = {'code': 0, 'message': 'You have submitted your information successful, the certificate is sent to you,  please check your email', 'data': None}
-            response.data = return_msg(return_json)
-            return response
-        except Exception as e: #发送邮件或者创建图片错误 可能是邮件有问题
-            logging.info(e)
-            return response
-    else:
-        response.data = return_msg(return_json)
-        return response  # Key被用过了
+    elif request.method == 'POST':
+        message = json.loads(request.get_data(as_text = True))
+        name = message.get('name')
+        token = message.get('token', '')
+        if name is None:
+            return response_json(code=1, message='Name is required')
+        result = confirm_token(token)
+        if result is False:
+            return response_json(code=2, message='Token is not available, plz check your latest email')
+        email = result['email']
+        if is_token_unused(token):  # 先确定下是不是志愿者列表中的token 并且是否注册过 没问题的话开始做图片
+            update_status(email, 2)
+            update_name(email,name)
+            try:
+                wc.write_to_pic(name,email,token)
+                return_json = {'code': 0, 'message': 'You have submitted your information successful, the certificate is sent to you,  please check your email', 'data': None}
+                response.data = return_msg(return_json)
+                return response
+            except Exception as e:  # 发送邮件或者创建图片错误 可能是邮件有问题
+                logger.info(e)
+                return response_json(4, str(e))
+        else:
+            return response_json(3, 'You have submitted your information successful, please check your email')
 
 
 @app.route('/api/uploadImage', methods = ['POST', 'OPTIONS'])
@@ -134,7 +138,7 @@ def save_image():
     try:
         image_file.save(os.path.join(basedir, 'pic.jpg'))
     except Exception as e:
-        logging.info(e)
+        logger.info(e)
     return_json = {'code': 0, 'message': 'upload successfully', 'data': None}
     response.data = return_msg(return_json)
     return response    
@@ -158,14 +162,14 @@ def add_data():
         return response
     for email in email_list:
         if check_email(email) == False:
-            logging.info('invalid email %s' % email)
+            logger.info('invalid email %s' % email)
             continue
         try:       
             insert_people(email, '')
         except KeyError:
             pass
         except Exception as e:
-            logging.info(e)
+            logger.info(e)
     return_json = {'code': 0, 'message': 'update emails successfully', 'data': None}
     response.data = return_msg(return_json)
     return response
@@ -205,7 +209,7 @@ def update_config():
         utils.update_org_config(orgconfig)
         utils.update_email_config(emailconfig)
     except Exception as e:
-        logging.info(e) 
+        logger.info(e)
     return_json = {'code': 0, 'message': 'update config successfully', 'data': None}
     response.data = return_msg(return_json)
     return response
@@ -234,7 +238,7 @@ def email_task():
     return response
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger.setLevel(logging.INFO)
     if not os.path.isdir("images"):
         os.mkdir("images")
     host_name = '0.0.0.0'
@@ -244,4 +248,4 @@ if __name__ == '__main__':
         port_name = int(os.environ['port'])
     else:
         port_name = 5000
-    app.run(host=host_name, port=port_name)
+    app.run(host=host_name, port=port_name, debug=True)
