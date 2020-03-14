@@ -5,9 +5,9 @@ import logging
 import utils
 import re
 
-from flask import Flask , request , render_template , send_file
+from flask import Flask, request, render_template, send_file
 from flask import Response
-from tinydb import Query , TinyDB
+from tinydb import Query, TinyDB
 
 import pic_email as wc
 from model import update_status, update_name
@@ -30,7 +30,7 @@ def return_msg(message):
     return message
 
 def check_email(email):
-    regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+    regex = r'^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
     if re.search(regex, email):
         return True
     return False
@@ -65,7 +65,7 @@ def is_token_unused(token):#确定一下Key有没有被用过
     else:
         return False
 
-@app.route('/api/getUserInfo',methods = ['get', 'OPTIONS'])
+@app.route('/api/getUserInfo', methods=['get', 'OPTIONS'])
 def token():
     message = request.args.get('token')
     person_info = confirm_token(message)
@@ -81,7 +81,7 @@ def token():
     response.data = return_msg(return_json)
     return response
 
-@app.route('/api/submitUserInfo',methods = ['POST', 'OPTIONS'])
+@app.route('/api/submitUserInfo', methods=['POST', 'OPTIONS'])
 def send_email():
     response = Response()
     response.headers['Content-Type'] = 'application/json'
@@ -114,7 +114,7 @@ def send_email():
             return response_json(3, 'You have submitted your information successful, please check your email')
 
 
-@app.route('/api/uploadImage', methods = ['POST', 'OPTIONS'])
+@app.route('/api/uploadImage', methods=['POST', 'OPTIONS'])
 def save_image():
     if request.method == 'POST':
         # get the token from the header
@@ -143,10 +143,10 @@ def save_image():
     response.data = return_msg(return_json)
     return response    
 
-@app.route('/api/addUserData',methods = ['POST', 'OPTIONS'])
+@app.route('/api/addUserData', methods=['POST', 'OPTIONS'])
 def add_data():
     if request.method == 'POST':
-        message = json.loads(request.get_data(as_text = True))
+        message = json.loads(request.get_data(as_text=True))
         email_list = message['email']
         token = message['token']
         result = confirm_admin_token(token)  # 没有每个人唯一的Key
@@ -174,10 +174,10 @@ def add_data():
     response.data = return_msg(return_json)
     return response
     
-@app.route('/api/updateOrgConfig',methods = ['POST', 'OPTIONS'])
+@app.route('/api/updateOrgConfig', methods=['POST', 'OPTIONS'])
 def update_config():
     if request.method == 'POST':
-        message = json.loads(request.get_data(as_text = True))
+        message = json.loads(request.get_data(as_text=True))
         token = message["token"]
         result = confirm_admin_token(token)  # 没有每个人唯一的Key
     response = Response()
@@ -214,11 +214,11 @@ def update_config():
     response.data = return_msg(return_json)
     return response
 
-@app.route('/api/email',methods = ['POST', 'OPTIONS'])
+@app.route('/api/email', methods=['POST', 'OPTIONS'])
 def email_task():
     if request.method == 'POST':
-        message = json.loads(request.get_data(as_text = True))
-        action = message.get('action','')
+        message = json.loads(request.get_data(as_text=True))
+        action = message.get('action', '')
         token = message['token']
         result = confirm_admin_token(token)  # 没有每个人唯一的Key
     response = Response()

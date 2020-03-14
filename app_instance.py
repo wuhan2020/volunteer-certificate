@@ -1,3 +1,5 @@
 from flask import Flask
+from flask.logging import create_logger
+
 app = Flask(__name__)
-logger = app.logger
+logger = create_logger(app)

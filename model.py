@@ -27,7 +27,7 @@ def insert_people(email, name, number='', token=None):
     People = Query()
     exist_list = db.search(People.email == email)
     if len(exist_list):
-        logging.info('Duplicate entry for key email %s' % email)
+        logger.info('Duplicate entry for key email %s' % email)
         db.close()
         raise EmailDuplicateException()
     if token:
