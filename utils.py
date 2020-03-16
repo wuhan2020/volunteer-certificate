@@ -41,7 +41,6 @@ def update_email_config(emailconfig):
     with open(config_file, 'w') as f:
         json.dump(emailconfig, f)
 
-
 def send_email(to_email, subject, content, attachment=None):
     email_json = get_email_config()
     # 链接邮箱服务器
