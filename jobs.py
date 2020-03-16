@@ -52,7 +52,7 @@ class SendEmailJob:
                     content=content,
                 )
             except Exception as e:
-                logger.error('send email to %s failed; Reason:' % user['email'])
+                logger.error('send email to %s failed; Email address:' % user['email'])
                 logger.error(e)
             else:
                 update_status_and_token(email=user['email'], status=1, token=token)
