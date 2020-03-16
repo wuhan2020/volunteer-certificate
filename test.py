@@ -1,7 +1,10 @@
 import json
+import os
 import unittest
 from shutil import copyfile
 from unittest.mock import patch
+
+from PIL import Image
 
 from app import app
 from model import insert_people
@@ -98,4 +101,9 @@ class DbOperationTests(unittest.TestCase):
 
 if __name__ == '__main__':
     copyfile('config/data.json', 'data.json')
+    if not os.path.isdir("images"):
+        os.mkdir("images")
+    if not os.path.exists('pic.jpg'):
+        img = Image.new('RGB', (750, 1200))
+        img.save('pic.jpg')
     unittest.main()
