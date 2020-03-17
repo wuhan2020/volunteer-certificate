@@ -53,15 +53,9 @@ def send_email(to_email, subject, content, attachment=None):
                        smtp_skip_login=email_json["skip_auth"])
     # 邮箱正文
     # contents = ['您好，附件中有您的证书']
-    logger.info("send to " + to_email, 'with subject', subject)
+    logger.info("send to " + to_email + '; with subject: ' + subject)
     # 发送邮件
-    try:
-        yag.send(to_email, subject, content, attachment)
-    except Exception as e:
-        logger.info('send email to %s failed; Reason:' % to_email)
-        logger.info(e)
-        return False
-    return True
+    yag.send(to_email, subject, content, attachment)
 
 
 def response_json(code=0, message='success', data=None):

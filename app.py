@@ -108,7 +108,7 @@ def send_email():
                 response.data = return_msg(return_json)
                 return response
             except Exception as e:  # 发送邮件或者创建图片错误 可能是邮件有问题
-                logger.info(e)
+                logger.error(e)
                 return response_json(4, str(e))
         else:
             return response_json(3, 'You have submitted your information successful, please check your email')
@@ -209,7 +209,7 @@ def update_config():
         utils.update_org_config(orgconfig)
         utils.update_email_config(emailconfig)
     except Exception as e:
-        logger.info(e)
+        logger.error(e)
     return_json = {'code': 0, 'message': 'update config successfully', 'data': None}
     response.data = return_msg(return_json)
     return response

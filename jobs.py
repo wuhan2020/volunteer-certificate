@@ -45,12 +45,16 @@ class SendEmailJob:
             content += org_config["name"]
             content += '\n网址：<a href="{0}">{0}</a>'.format(org_config["website"])
 
-            is_successful = send_email(
-                to_email=user['email'],
-                subject='快来领取您的《 %s 志愿者证书》' % org_config["name"],
-                content=content,
-            )
-            if is_successful:
+            try:
+                send_email(
+                    to_email=user['email'],
+                    subject='快来领取您的《 %s 志愿者证书》' % org_config["name"],
+                    content=content,
+                )
+            except Exception as e:
+                logger.error('send email to %s failed; Email address:' % user['email'])
+                logger.error(e)
+            else:
                 update_status_and_token(email=user['email'], status=1, token=token)
             slope = email_config["max_second"] - email_config["min_second"]
             time.sleep(email_config["min_second"] + random.random() * slope)
