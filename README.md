@@ -1,5 +1,7 @@
 # volunteer-certificate
 ![Python application](https://github.com/wuhan2020/volunteer-certificate/workflows/Python%20application/badge.svg)
+[![Slack](https://img.shields.io/badge/slack-join-orange.svg)](https://app.slack.com/client/TT5U1VCPQ/CUG6LS458)
+
 # 安装并启动项目:
 ## Dependency Installation
 ```shell
