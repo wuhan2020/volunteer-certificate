@@ -1,5 +1,7 @@
 # volunteer-certificate
 ![Python application](https://github.com/wuhan2020/volunteer-certificate/workflows/Python%20application/badge.svg)
+[![Slack](https://img.shields.io/badge/slack-join-orange.svg)](https://app.slack.com/client/TT5U1VCPQ/CUG6LS458)
+
 # 安装并启动项目:
 ## Dependency Installation
 ```shell
@@ -158,9 +160,11 @@ Json response, same format as 1.
 }
 ```
 Json response, same format as 1.
-```
-## 二、数据表
 
+
+
+
+## 二、数据表
 
 | 字段                                                  | 类型                                                | 名称   | 描述                                      |
 | ----------------------------------------------------- | ---------- | ------------------------------------------- | ------------ |
@@ -188,7 +192,7 @@ Json response, same format as 1.
 ### 第6步. 用户修改并提交数据，证书发到用户邮箱
 
  调用接口**2.用户提交信息：**提交到后端
- 
+
 ### 第7步. 后端服务生成图片，发送邮件
   #### 后端更新本行记录：name 为新称呼，状态置为 2
   #### 调用生成图片接口，更新pic_url，更新status 为3
