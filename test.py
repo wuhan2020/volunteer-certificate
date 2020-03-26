@@ -97,7 +97,8 @@ class DbOperationTests(unittest.TestCase):
             insert_people('abc@example.org', 'fake name')
         except:
             pass
-
+    def test_insert_people_new_api(self):
+        insert_people('abcd@example.org,2020030001','Yang Li')
 
 if __name__ == '__main__':
     copyfile('config/data.json', 'data.json')
