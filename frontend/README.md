@@ -14,8 +14,15 @@ The email you filled in this part is used to send the notification and certifica
 
 You can fill in your own personal email first in the textarea to test the functionality.
 After all three submit button has been clicked and you have sucessfully submitted the information.
+
 You can start send emails to the volunteers. Click the `Send Email` button and you are done.
 
+You can add multiple emails in the textarea. Each email per line.
+You can even add certificate numbers after the email using the following format:
+```
+email1,number1
+email2,number2
+```
 When volunteers receive your notification email, they open a link in the email:
 
 ![](user-mode.png)
