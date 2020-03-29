@@ -161,11 +161,16 @@ def add_data():
     if result == False:
         return response
     for email in email_list:
+        if email.find(',') > 0:
+            number = email.split(',')[1]
+            email = email.split(',')[0]
+        else:
+            number = ''
         if check_email(email) == False:
             logger.info('invalid email %s' % email)
             continue
         try:       
-            insert_people(email, '')
+            insert_people(email, '', number=number)
         except KeyError:
             pass
         except Exception as e:

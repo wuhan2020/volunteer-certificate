@@ -54,10 +54,14 @@ class WebAPITests(unittest.TestCase):
         response = client.post('/api/addUserData', json=json_data)
         res_json = json.loads(response.data.decode('ascii'))
         self.assertEqual(res_json['code'], 0)
+        json_data = {"token": "1234", "email": ["def2@example.org,wuhan2020030001"]}
+        response = client.post('/api/addUserData', json=json_data)
+        res_json = json.loads(response.data.decode('ascii'))
+        self.assertEqual(res_json['code'], 0)
 
     def test_addUserRejected(self):
         client = app.test_client()
-        json_data = {"token": "5678", "email": "def@example.org"}
+        json_data = {"token": "5678", "email": ["def@example.org"]}
         response = client.post('/api/addUserData', json=json_data)
         res_json = json.loads(response.data.decode('ascii'))
         self.assertEqual(res_json['code'], 1)
@@ -97,7 +101,8 @@ class DbOperationTests(unittest.TestCase):
             insert_people('abc@example.org', 'fake name')
         except:
             pass
-
+    def test_insert_people_new_api(self):
+        insert_people('abcd@example.org,2020030001','Yang Li')
 
 if __name__ == '__main__':
     copyfile('config/data.json', 'data.json')
