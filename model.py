@@ -23,10 +23,6 @@ class EmailDuplicateException(Exception):
         pass
         
 def insert_people(email_number, name, number='', token=None):
-    if email_number.find(',') > 0:
-        email, number = email_number.split(',')
-    else:
-        email = email_number
     db = TinyDB("data.json")
     People = Query()
     exist_list = db.search(People.email == email)
