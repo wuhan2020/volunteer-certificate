@@ -57,11 +57,11 @@ class WebAPITests(unittest.TestCase):
 
     def test_addUserRejected(self):
         client = app.test_client()
-        json_data = {"token": "5678", "email": "def@example.org"}
+        json_data = {"token": "5678", "email": ["def@example.org"]}
         response = client.post('/api/addUserData', json=json_data)
         res_json = json.loads(response.data.decode('ascii'))
         self.assertEqual(res_json['code'], 1)
-        json_data = {"token": "1234", "email": "def2@example.org,wuhan2020030001"}
+        json_data = {"token": "1234", "email": ["def2@example.org,wuhan2020030001"]}
         response = client.post('/api/addUserData', json=json_data)
         res_json = json.loads(response.data.decode('ascii'))
         self.assertEqual(res_json['code'], 0)
